@@ -65,3 +65,66 @@ class BusinessUnit(models.Model):
     def clean(self):
         if self.manager_id and not WorkspaceMembership.objects.filter(workspace=self.entity.workspace, user=self.manager, is_active=True).exists():
             raise ValidationError({"manager": "Le responsable doit être membre actif du workspace."})
+
+
+class WorkspaceProfile(models.Model):
+    """Workspace-level onboarding choices used to personalize import templates."""
+
+    class Industry(models.TextChoices):
+        COMMERCE = "COMMERCE", "Commerce / Distribution"
+        SERVICES = "SERVICES", "Services"
+        MANUFACTURING = "MANUFACTURING", "Production / Industrie"
+        TRANSPORT_LOGISTICS = "TRANSPORT_LOGISTICS", "Transport / Logistique"
+        MIXED = "MIXED", "Activités mixtes / Groupe"
+        OTHER = "OTHER", "Autre"
+
+    class OperatingModel(models.TextChoices):
+        SINGLE_ENTITY = "SINGLE_ENTITY", "Une entreprise"
+        MULTI_SITE = "MULTI_SITE", "Une entreprise avec plusieurs sites"
+        MULTI_ENTITY = "MULTI_ENTITY", "Plusieurs entreprises / groupe"
+
+    class EntityCountBand(models.TextChoices):
+        ONE = "1", "1"
+        TWO_TO_FIVE = "2-5", "2 à 5"
+        SIX_TO_TWENTY = "6-20", "6 à 20"
+        OVER_TWENTY = "21+", "Plus de 20"
+
+    class SourceSystem(models.TextChoices):
+        EXCEL_CSV = "EXCEL_CSV", "Excel / CSV"
+        ACCOUNTING_SOFTWARE = "ACCOUNTING_SOFTWARE", "Logiciel comptable"
+        ERP = "ERP", "ERP / logiciel de gestion"
+        POS = "POS", "Caisse / point de vente"
+        MANUAL = "MANUAL", "Saisie manuelle"
+        OTHER = "OTHER", "Autre"
+
+    class Module(models.TextChoices):
+        SALES = "SALES", "Ventes"
+        CASH = "CASH", "Encaissements"
+        BANK = "BANK", "Soldes de trésorerie"
+        EXPENSES = "EXPENSES", "Dépenses"
+        RECEIVABLES = "RECEIVABLES", "Créances clients"
+        PAYABLES = "PAYABLES", "Dettes fournisseurs"
+
+    workspace = models.OneToOneField(
+        Workspace, primary_key=True, on_delete=models.CASCADE, related_name="profile"
+    )
+    industry = models.CharField(max_length=32, choices=Industry.choices, default=Industry.OTHER)
+    operating_model = models.CharField(
+        max_length=20, choices=OperatingModel.choices, default=OperatingModel.SINGLE_ENTITY
+    )
+    entity_count_band = models.CharField(
+        max_length=8, choices=EntityCountBand.choices, default=EntityCountBand.ONE
+    )
+    source_systems = models.JSONField(default=list, blank=True)
+    selected_modules = models.JSONField(default=list, blank=True)
+    other_requirements = models.TextField(blank=True)
+    template_version = models.CharField(max_length=20, default="1.0")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "workspace profile"
+        verbose_name_plural = "workspace profiles"
+
+    def __str__(self):
+        return f"Profil de {self.workspace.name}"

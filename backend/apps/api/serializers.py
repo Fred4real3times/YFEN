@@ -1,27 +1,59 @@
 from django.contrib.auth import get_user_model
 from django.core.validators import RegexValidator
 from rest_framework import serializers
-from apps.tenancy.models import Workspace, WorkspaceMembership, LegalEntity, BusinessUnit
+from apps.tenancy.models import Workspace, WorkspaceMembership, WorkspaceProfile, LegalEntity, BusinessUnit
 from apps.actions.models import ActionItem, ActionComment
 from apps.sources.models import ImportBatch
 
 User = get_user_model()
 
+class WorkspaceProfileSerializer(serializers.ModelSerializer):
+    source_systems = serializers.ListField(
+        child=serializers.ChoiceField(choices=WorkspaceProfile.SourceSystem.choices),
+        required=False,
+        default=list,
+    )
+    selected_modules = serializers.ListField(
+        child=serializers.ChoiceField(choices=WorkspaceProfile.Module.choices),
+        required=True,
+        allow_empty=False,
+    )
+    other_requirements = serializers.CharField(required=False, allow_blank=True, max_length=2000)
+
+    class Meta:
+        model = WorkspaceProfile
+        fields = [
+            "industry", "operating_model", "entity_count_band", "source_systems",
+            "selected_modules", "other_requirements", "template_version", "updated_at",
+        ]
+        read_only_fields = ["template_version", "updated_at"]
+
+
 class WorkspaceSerializer(serializers.ModelSerializer):
     role = serializers.CharField(read_only=True)
+    profile = WorkspaceProfileSerializer(read_only=True)
+
     class Meta:
         model = Workspace
-        fields = ["id", "name", "default_currency", "timezone", "status", "created_at", "role"]
-        read_only_fields = ["id", "status", "created_at", "role"]
+        fields = ["id", "name", "default_currency", "timezone", "status", "created_at", "role", "profile"]
+        read_only_fields = ["id", "status", "created_at", "role", "profile"]
+
 
 class CreateWorkspaceSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=160)
     default_currency = serializers.CharField(max_length=3, default="XAF", validators=[RegexValidator(r"^[A-Z]{3}$")])
     timezone = serializers.CharField(max_length=64, default="Africa/Douala")
+    profile = WorkspaceProfileSerializer(required=False)
+
     def create(self, validated_data):
-        user = self.context["request"].user
+        profile_data = validated_data.pop("profile", None)
+        user = self.context.get("user")
+        if user is None:
+            user = self.context["request"].user
         workspace = Workspace.objects.create(owner=user, **validated_data)
         WorkspaceMembership.objects.create(workspace=workspace, user=user, role=WorkspaceMembership.Role.OWNER)
+        if profile_data is not None:
+            WorkspaceProfile.objects.create(workspace=workspace, **profile_data)
         return workspace
 
 class EntitySerializer(serializers.ModelSerializer):
