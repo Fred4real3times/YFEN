@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="393" height="852" viewBox="0 0 393 852" role="img" aria-labelledby="title desc">
+<title id="title">YFEN — Analyse</title><desc id="desc">Tendances et comparaisons · sources traçables</desc>
+<defs><linearGradient id="teal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3FE8C5"/><stop offset="1" stop-color="#00D4AA"/></linearGradient></defs>
+<style>
+.txt{font-family:Inter,Arial,sans-serif;fill:#F0F5FB}.muted{font-family:Inter,Arial,sans-serif;fill:#8CA2C0}.mono{font-family:'JetBrains Mono',monospace;fill:#F0F5FB}.head{font-family:'Clash Display',Inter,Arial,sans-serif;font-weight:700;fill:#F0F5FB}.small{font-size:10px}.body{font-size:12px}.label{font-size:11px;fill:#8CA2C0}.card{fill:#112240;stroke:rgba(255,255,255,.07);stroke-width:1}.divider{stroke:rgba(255,255,255,.08);stroke-width:1}
+</style>
+<rect width="393" height="852" rx="32" fill="#0A192F"/>
+<text class="txt" x="25" y="27" font-size="14" font-weight="700">9:41</text>
+<g fill="#F0F5FB"><rect x="318" y="18" width="4" height="7" rx="1"/><rect x="325" y="15" width="4" height="10" rx="1"/><rect x="332" y="12" width="4" height="13" rx="1"/><rect x="346" y="14" width="23" height="11" rx="3" fill="none" stroke="#F0F5FB"/><rect x="349" y="17" width="15" height="5" rx="1"/></g>
+<g transform="translate(20 51)">
+<rect width="35" height="35" rx="11" fill="#112240" stroke="rgba(255,255,255,.10)"/>
+<path d="M9 9 L17.5 18 M26 9 L17.5 18 M17.5 18 V28" stroke="url(#teal)" stroke-width="3" stroke-linecap="round" fill="none"/>
+<circle cx="17.5" cy="18" r="2.5" fill="#0A192F" stroke="#E6C288" stroke-width="1.5"/>
+</g>
+<text class="head" x="67" y="74" font-size="19">YFEN<tspan fill="#E6C288">.</tspan></text>
+<text class="muted small" x="67" y="91">Toutes vos entreprises, en un seul endroit.</text>
+<circle cx="352" cy="69" r="18" fill="#E6C288"/><text x="352" y="73" text-anchor="middle" font-family="Inter,Arial" font-size="11" font-weight="700" fill="#0A192F">NE</text>
+<text class="head" x="22" y="131" font-size="23">Analyse</text>
+<text class="muted" x="22" y="151" font-size="11">Tendances et comparaisons · sources traçables</text>
+
+<rect class="card" x="18" y="173" width="357" height="170" rx="18"/><text class="head" x="34" y="198" font-size="14">Répartition du chiffre d’affaires</text><circle cx="102" cy="267" r="47" fill="none" stroke="#1B3556" stroke-width="15"/><circle cx="102" cy="267" r="47" fill="none" stroke="#00D4AA" stroke-width="15" stroke-dasharray="104 295" transform="rotate(-90 102 267)"/><circle cx="102" cy="267" r="47" fill="none" stroke="#5487D9" stroke-width="15" stroke-dasharray="77 295" stroke-dashoffset="-107" transform="rotate(-90 102 267)"/><circle cx="102" cy="267" r="47" fill="none" stroke="#FF6B6B" stroke-width="15" stroke-dasharray="68 295" stroke-dashoffset="-187" transform="rotate(-90 102 267)"/><circle cx="102" cy="267" r="47" fill="none" stroke="#E6C288" stroke-width="15" stroke-dasharray="46 295" stroke-dashoffset="-258" transform="rotate(-90 102 267)"/><text class="mono" x="102" y="272" text-anchor="middle" font-size="15">148,8 M</text>
+<circle cx="190" cy="235" r="5" fill="#00D4AA"/><text class="txt small" x="203" y="239">Mungo Agro</text><text class="muted small" x="350" y="239" text-anchor="end">35,2 %</text><circle cx="190" cy="258" r="5" fill="#5487D9"/><text class="txt small" x="203" y="262">Wouri Logistique</text><text class="muted small" x="350" y="262" text-anchor="end">26,2 %</text><circle cx="190" cy="281" r="5" fill="#FF6B6B"/><text class="txt small" x="203" y="285">Estuaire Distribution</text><text class="muted small" x="350" y="285" text-anchor="end">23,0 %</text><circle cx="190" cy="304" r="5" fill="#E6C288"/><text class="txt small" x="203" y="308">Bénoué Énergies</text><text class="muted small" x="350" y="308" text-anchor="end">15,6 %</text>
+<text class="head" x="22" y="379" font-size="16">Évolution sur 6 mois</text><rect class="card" x="18" y="395" width="357" height="151" rx="17"/>
+<g fill="#24456E"><rect x="38" y="461" width="30" height="60" rx="5"/><rect x="91" y="445" width="30" height="76" rx="5"/><rect x="144" y="452" width="30" height="69" rx="5"/><rect x="197" y="424" width="30" height="97" rx="5"/><rect x="250" y="410" width="30" height="111" rx="5"/></g><rect x="303" y="405" width="30" height="116" rx="5" fill="url(#teal)"/>
+<g class="muted" font-size="9" text-anchor="middle"><text x="53" y="536">Mai</text><text x="106" y="536">Juin</text><text x="159" y="536">Juil.</text><text x="212" y="536">Août</text><text x="265" y="536">Sept.</text><text x="318" y="536" fill="#00D4AA">Oct.</text></g>
+<text class="head" x="22" y="580" font-size="16">Marge par entreprise</text><rect class="card" x="18" y="596" width="357" height="128" rx="17"/>
+<text class="muted small" x="34" y="623">Mungo Agro</text><rect x="148" y="612" width="174" height="10" rx="5" fill="#203A5B"/><rect x="148" y="612" width="131" height="10" rx="5" fill="#00D4AA"/><text class="mono small" x="355" y="623" text-anchor="end">24,8 %</text>
+<text class="muted small" x="34" y="650">Wouri Logistique</text><rect x="148" y="639" width="174" height="10" rx="5" fill="#203A5B"/><rect x="148" y="639" width="112" height="10" rx="5" fill="#5487D9"/><text class="mono small" x="355" y="650" text-anchor="end">21,2 %</text>
+<text class="muted small" x="34" y="677">Estuaire Dist.</text><rect x="148" y="666" width="174" height="10" rx="5" fill="#203A5B"/><rect x="148" y="666" width="103" height="10" rx="5" fill="#FF6B6B"/><text class="mono small" x="355" y="677" text-anchor="end">19,6 %</text>
+<text class="muted small" x="22" y="750">Données illustratives fictives · période affichée : octobre 2026.</text>
+
+<rect x="0" y="777" width="393" height="75" fill="#0A192F" stroke="rgba(255,255,255,.07)"/>
+<g font-family="Inter,Arial" font-size="9" text-anchor="middle">
+<text x="43" y="811" fill="#8CA2C0">◉</text><text x="43" y="829" fill="#8CA2C0">Cockpit</text>
+<text x="122" y="811" fill="#8CA2C0">▣</text><text x="122" y="829" fill="#8CA2C0">Portefeuille</text>
+<circle cx="196" cy="802" r="24" fill="url(#teal)"/><path d="M196 812 V790 M188 798 L196 790 204 798" stroke="#0A192F" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+<text x="270" y="811" fill="#8CA2C0">✓</text><text x="270" y="829" fill="#8CA2C0">Actions</text>
+<text x="349" y="811" fill="#00D4AA">▥</text><text x="349" y="829" fill="#00D4AA">Analyse</text>
+</g></svg>
