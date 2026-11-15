@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="393" height="852" viewBox="0 0 393 852" role="img" aria-labelledby="title desc">
+<title id="title">YFEN — Portefeuille</title><desc id="desc">Toutes vos entreprises et unités opérationnelles dans une seule vue</desc>
+<defs><linearGradient id="teal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3FE8C5"/><stop offset="1" stop-color="#00D4AA"/></linearGradient></defs>
+<style>
+.txt{font-family:Inter,Arial,sans-serif;fill:#F0F5FB}.muted{font-family:Inter,Arial,sans-serif;fill:#8CA2C0}.mono{font-family:'JetBrains Mono',monospace;fill:#F0F5FB}.head{font-family:'Clash Display',Inter,Arial,sans-serif;font-weight:700;fill:#F0F5FB}.small{font-size:10px}.body{font-size:12px}.label{font-size:11px;fill:#8CA2C0}.card{fill:#112240;stroke:rgba(255,255,255,.07);stroke-width:1}.divider{stroke:rgba(255,255,255,.08);stroke-width:1}
+</style>
+<rect width="393" height="852" rx="32" fill="#0A192F"/>
+<text class="txt" x="25" y="27" font-size="14" font-weight="700">9:41</text>
+<g fill="#F0F5FB"><rect x="318" y="18" width="4" height="7" rx="1"/><rect x="325" y="15" width="4" height="10" rx="1"/><rect x="332" y="12" width="4" height="13" rx="1"/><rect x="346" y="14" width="23" height="11" rx="3" fill="none" stroke="#F0F5FB"/><rect x="349" y="17" width="15" height="5" rx="1"/></g>
+<g transform="translate(20 51)">
+<rect width="35" height="35" rx="11" fill="#112240" stroke="rgba(255,255,255,.10)"/>
+<path d="M9 9 L17.5 18 M26 9 L17.5 18 M17.5 18 V28" stroke="url(#teal)" stroke-width="3" stroke-linecap="round" fill="none"/>
+<circle cx="17.5" cy="18" r="2.5" fill="#0A192F" stroke="#E6C288" stroke-width="1.5"/>
+</g>
+<text class="head" x="67" y="74" font-size="19">YFEN<tspan fill="#E6C288">.</tspan></text>
+<text class="muted small" x="67" y="91">Toutes vos entreprises, en un seul endroit.</text>
+<circle cx="352" cy="69" r="18" fill="#E6C288"/><text x="352" y="73" text-anchor="middle" font-family="Inter,Arial" font-size="11" font-weight="700" fill="#0A192F">NE</text>
+<text class="head" x="22" y="131" font-size="23">Portefeuille</text>
+<text class="muted" x="22" y="151" font-size="11">Toutes vos entreprises et unités opérationnelles dans une seule vue</text>
+
+<rect x="18" y="173" width="357" height="39" rx="13" fill="#0C1A33" stroke="rgba(255,255,255,.08)"/><text class="txt small" x="34" y="197">Toutes · 4</text><text class="muted small" x="147" y="197">À jour · 3</text><text class="muted small" x="270" y="197">À relancer · 1</text>
+<rect class="card" x="18" y="227" width="357" height="104" rx="17"/><circle cx="49" cy="260" r="17" fill="#143B4A"/><text class="head" x="49" y="265" text-anchor="middle" font-size="11">MA</text><text class="txt" x="77" y="256" font-size="13" font-weight="600">Mungo Agro</text><text class="muted small" x="77" y="275">Agriculture · Douala</text><text class="mono" x="357" y="260" text-anchor="end" font-size="13">52,4 M</text><text x="357" y="278" class="small" text-anchor="end" fill="#00D4AA">À jour</text><line class="divider" x1="34" y1="293" x2="359" y2="293"/><text class="label" x="34" y="313">Marge  ·  24,8 %</text><text class="muted small" x="357" y="313" text-anchor="end">3 unités</text>
+<rect class="card" x="18" y="343" width="357" height="104" rx="17"/><circle cx="49" cy="376" r="17" fill="#1D3559"/><text class="head" x="49" y="381" text-anchor="middle" font-size="11">WL</text><text class="txt" x="77" y="372" font-size="13" font-weight="600">Wouri Logistique</text><text class="muted small" x="77" y="391">Transport · Douala</text><text class="mono" x="357" y="376" text-anchor="end" font-size="13">39,0 M</text><text x="357" y="394" class="small" text-anchor="end" fill="#00D4AA">À jour</text><line class="divider" x1="34" y1="409" x2="359" y2="409"/><text class="label" x="34" y="429">Marge  ·  21,2 %</text><text class="muted small" x="357" y="429" text-anchor="end">2 unités</text>
+<rect class="card" x="18" y="459" width="357" height="104" rx="17"/><circle cx="49" cy="492" r="17" fill="#482F36"/><text class="head" x="49" y="497" text-anchor="middle" font-size="11">ED</text><text class="txt" x="77" y="488" font-size="13" font-weight="600">Estuaire Distribution</text><text class="muted small" x="77" y="507">Distribution · Douala</text><text class="mono" x="357" y="492" text-anchor="end" font-size="13">34,2 M</text><text x="357" y="510" class="small" text-anchor="end" fill="#FF6B6B">Silence · 42 j</text><line class="divider" x1="34" y1="525" x2="359" y2="525"/><text class="label" x="34" y="545">Marge  ·  19,6 %</text><text class="muted small" x="357" y="545" text-anchor="end">3 unités</text>
+<rect class="card" x="18" y="575" width="357" height="104" rx="17"/><circle cx="49" cy="608" r="17" fill="#493D2B"/><text class="head" x="49" y="613" text-anchor="middle" font-size="11">BE</text><text class="txt" x="77" y="604" font-size="13" font-weight="600">Bénoué Énergies</text><text class="muted small" x="77" y="623">Énergie · Garoua</text><text class="mono" x="357" y="608" text-anchor="end" font-size="13">23,2 M</text><text x="357" y="626" class="small" text-anchor="end" fill="#00D4AA">À jour</text><line class="divider" x1="34" y1="641" x2="359" y2="641"/><text class="label" x="34" y="661">Marge  ·  27,1 %</text><text class="muted small" x="357" y="661" text-anchor="end">2 unités</text>
+<rect x="18" y="696" width="357" height="58" rx="14" fill="#0C1A33"/><text class="muted small" x="34" y="719">Vue portefeuille · valeurs déclarées</text><text class="txt small" x="34" y="738">Sommes limitées à la même devise et période.</text>
+
+<rect x="0" y="777" width="393" height="75" fill="#0A192F" stroke="rgba(255,255,255,.07)"/>
+<g font-family="Inter,Arial" font-size="9" text-anchor="middle">
+<text x="43" y="811" fill="#8CA2C0">◉</text><text x="43" y="829" fill="#8CA2C0">Cockpit</text>
+<text x="122" y="811" fill="#00D4AA">▣</text><text x="122" y="829" fill="#00D4AA">Portefeuille</text>
+<circle cx="196" cy="802" r="24" fill="url(#teal)"/><path d="M196 812 V790 M188 798 L196 790 204 798" stroke="#0A192F" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+<text x="270" y="811" fill="#8CA2C0">✓</text><text x="270" y="829" fill="#8CA2C0">Actions</text>
+<text x="349" y="811" fill="#8CA2C0">▥</text><text x="349" y="829" fill="#8CA2C0">Analyse</text>
+</g></svg>
