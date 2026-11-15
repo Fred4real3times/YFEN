@@ -1,5 +1,7 @@
 # Architecture technique YFEN
 
+**Promesse produit : « Toutes vos entreprises, en un seul endroit. »** Un workspace YFEN représente le portefeuille d'un dirigeant ou d'un groupe et peut regrouper plusieurs entreprises, filiales, établissements et unités opérationnelles.
+
 ## Décision
 
 **Monolithe modulaire Django + traitements différés**, exposé par API REST, avec un frontend React/TypeScript PWA. Pas de microservices au MVP. Les frontières métier sont matérialisées par des applications Django afin de conserver un faible coût d'exploitation et de pouvoir extraire un service plus tard si la charge le justifie.
@@ -115,10 +117,17 @@ Les anciens comptes sans workspace passent par le même composant de questions a
 
 La direction de marque et d'expérience est définie dans [`docs/design/brand-system.md`](design/brand-system.md). Elle constitue une contrainte de conception, pas une simple couche cosmétique.
 
+### Portefeuille multi-entreprises
+
+- Le workspace est le conteneur du portefeuille ; il n'est pas limité à une seule entreprise. Il regroupe plusieurs `LegalEntity` et `BusinessUnit` sous un même accès YFEN.
+- Le Cockpit ouvre sur la vue d'ensemble du portefeuille. Le dirigeant peut ensuite ouvrir une entreprise ou un établissement sans changer d'application ni perdre le contexte global.
+- « Toutes vos entreprises en un seul endroit » signifie une expérience et un espace de données communs pour les entités rattachées au workspace, dans le respect des permissions. Cela ne promet ni intégrations automatiques avec tous les logiciels, ni collecte temps réel, ni couverture des données qui n'ont pas été transmises.
+- Les données, sources, périodes, devises et droits restent attachés à chaque entité. Les agrégats du portefeuille ne sont calculés que pour des métriques comparables ; ils ne constituent pas une consolidation comptable et n'éliminent pas les opérations intragroupe au MVP.
+
 ### Contrat d'expérience
 
 - **Une seule application, des espaces adaptés au rôle.** Aucun produit ou frontend distinct pour le dirigeant et les opérateurs.
-- **Owner : cockpit exécutif par défaut.** La première vue répond à « que dois-je savoir et traiter maintenant ? » ; elle privilégie la situation globale, quatre indicateurs de tête au maximum, trois exceptions prioritaires au maximum, la fraîcheur des données et les actions à arbitrer.
+- **Owner : cockpit exécutif par défaut.** La première vue répond à « que dois-je savoir et traiter maintenant ? » pour toutes les entreprises de son portefeuille ; elle privilégie la situation globale, quatre indicateurs de tête au maximum, trois exceptions prioritaires au maximum, la fraîcheur des données et les actions à arbitrer.
 - **Accountant / Manager : espace opérationnel.** Leur entrée privilégie les imports à préparer, les anomalies à corriger, les lots en attente et les actions affectées. Les fonctions visibles dépendent des permissions et du périmètre attribué.
 - **Détails progressifs.** Un chiffre ouvre son explication ; l'explication ouvre les sources ; les lignes détaillées et les filtres avancés ne sont pas exposés par défaut.
 - **Une question et une action principale par écran.** Le Cockpit ne devient pas un outil BI. Les analyses graphiques approfondies restent dans l'écran Analyse.
