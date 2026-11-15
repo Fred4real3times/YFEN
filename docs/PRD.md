@@ -118,30 +118,38 @@ Le noyau P0 doit déjà apporter de la valeur sans IA générative. Le résumé 
 
 ## 4. Expérience utilisateur et design system
 
-### 4.1 Navigation principale
+### 4.1 Navigation principale — six écrans, un cockpit
 
 | Écran | Question à laquelle il répond | Priorité |
 | --- | --- | --- |
-| Accueil / Mon portefeuille | Qu’est-ce qui mérite mon attention aujourd’hui ? | P0 |
-| Entreprises | Quelle entité ou activité dois-je consulter ? | P0 |
-| Données / Imports | D’où viennent les chiffres et sont-ils fiables ? | P0 |
-| Actions | Qui doit faire quoi et pour quand ? | P0 |
-| Assistant | Puis-je poser une question sans chercher dans cinq fichiers ? | P1, après les données fiables |
-| Paramètres / Accès | Qui voit quoi et comment gérer mon espace ? | P0 |
+| Cockpit | Que dois-je savoir et traiter maintenant ? | P0 — entrée Owner |
+| Portefeuille | Quelle entité ou unité mérite mon attention ? | P0 |
+| Imports | Les données ont-elles été reçues et contrôlées ? | P0 — usage opérationnel |
+| Actions | Qui fait quoi et pour quand ? | P0 |
+| Analyse | Quelle évolution ou différence dois-je comprendre ? | P0 — détail analytique |
+| Paramètres & accès | Qui peut voir et faire quoi ? | P0 — accès depuis l'en-tête sur mobile |
+
+L'assistant IA reste une capacité P1 intégrée à ces écrans après fiabilisation des KPI ; il ne constitue pas un écran supplémentaire obligatoire. Une seule application adapte sa page d'entrée et ses actions disponibles au rôle : cockpit exécutif pour OWNER ; parcours opérationnel et files de travail pour ACCOUNTANT et MANAGER.
+
+Sur mobile, les onglets visibles sont Cockpit, Portefeuille, Actions et Analyse ; l'import est l'action centrale ; les paramètres sont accessibles depuis l'en-tête. Sur desktop, la même hiérarchie devient une navigation latérale. Le portefeuille réunit les entités et les unités opérationnelles plutôt que de multiplier les écrans redondants.
 
 ### 4.2 Principes UX non négociables
 
-• Vue d’ensemble courte : trois à cinq indicateurs prioritaires, puis accès au détail.
-• Un vocabulaire compréhensible par un dirigeant non-comptable ; définitions disponibles pour chaque KPI.
-• Une action principale par écran ; saisie vocale possible mais toujours confirmée.
-• Afficher les montants dans leur devise d’origine ; ne jamais additionner XAF, USD ou EUR sans taux, date et méthode explicites.
-• Afficher « dernière mise à jour » et « données partielles » au même niveau visuel que la valeur.
-• Fonctionner correctement sur Android, écran étroit et connexion lente ; éviter les graphiques lourds.
-• Prévoir le français en premier, architecture prête pour anglais et autres langues ultérieurement.
+• **Précision et concision avant densité.** Le Cockpit montre au plus quatre indicateurs principaux et trois exceptions prioritaires ; le reste est accessible par « Voir tout ».
+• **Réponse immédiate.** La première vue présente l'état global, ce qui demande attention, la fraîcheur des informations et les actions attendues. Le dirigeant ne doit pas devoir construire son propre tableau de bord.
+• **Détails progressifs.** Un chiffre ouvre son explication, puis ses sources et ses lignes détaillées. Les filtres avancés ne sont pas exposés par défaut.
+• **Une question et une action dominante par écran.** Les graphiques détaillés sont dans Analyse ; le Cockpit n'est pas un outil BI.
+• **Vocabulaire dirigeant.** Langage courant, phrases courtes, définitions accessibles pour chaque KPI et précision explicite lorsqu'une valeur est « rapportée », « partielle » ou non rapprochée.
+• **Chaque chiffre est contextualisé.** Devise, période, dernière mise à jour et état de couverture sont visibles avec la valeur ou immédiatement à proximité.
+• **Aucune donnée fictive ou estimation silencieuse.** Une donnée absente n'est pas un zéro ; une période non comparable ne produit pas de variation.
+• **Alertes actionnables.** Le premier niveau ne montre que les exceptions qui appellent une décision ou une action. Une alerte doit expliquer le problème et permettre d'ouvrir l'action ou la preuve correspondante.
+• **Un vocabulaire visuel cohérent.** La référence est [`docs/design/brand-system.md`](design/brand-system.md) : Deep Horizon Blue, Electric Teal, Warm Sand, Alert Coral et Horizon Blue ; Clash Display pour les titres, Inter pour l'interface, JetBrains Mono pour les chiffres et références.
+• **Bilingue FR/EN.** Français par défaut et anglais sélectionnable dans l'interface cible dès le MVP.
+• **Mono-devise initiale XAF.** Aucune somme ne mélange des devises. Toute donnée dans une autre devise est séparée jusqu'à l'existence d'une méthode de conversion documentée, datée et validée.
 
 ### 4.3 Mobile prioritaire, pas mobile exclusif
 
-Recommandation : commencer par une PWA responsive installable sur Android. Le mobile sert à consulter, recevoir les alertes, dicter une note et traiter une action. Le navigateur desktop sert aux imports volumineux, au mapping de colonnes, à l’administration et aux rapports. Une application Android native ne sera justifiée qu’après validation des usages hors ligne, notifications, caméra ou intégrations appareil.
+Recommandation : commencer par une PWA responsive installable sur Android. Le mobile sert au dirigeant pour consulter, arbitrer et suivre les exceptions ; il sert au gestionnaire pour traiter une tâche simple ou soumettre un import. Le navigateur desktop sert prioritairement aux imports volumineux, au mapping de colonnes, au contrôle des anomalies, à l'administration et aux analyses détaillées. Une application Android native ne sera justifiée qu'après validation des usages hors ligne, notifications, caméra ou intégrations appareil.
 
 ### MODE RÉSEAU FAIBLE
 
@@ -185,6 +193,16 @@ Ne pas commencer par vingt ratios. Démarrer avec des métriques simples dont la
 • Les corrections produisent une nouvelle version et conservent l’historique ; pas de réécriture silencieuse.
 • Les entités multi-devises sont affichées séparément jusqu’à ce qu’un taux documenté et une règle de consolidation soient définis.
 
+
+### 5.4 Contrat de calcul et de visualisation
+
+• Le backend est la source de vérité des calculs ; les montants et ratios utilisent `Decimal`. Le frontend formate et affiche, mais ne recalcule pas les KPI.
+• Chaque KPI publié possède une définition versionnée : formule, composants requis, unité, devise, période, règles de signe, limites, provenance et jeux de tests de référence.
+• Si un composant manque, si la base de comparaison est nulle ou si les périodes ne sont pas comparables, le KPI ou la variation est signalé comme non calculable ; aucune estimation ou valeur zéro n'est substituée.
+• Le backend fournit les séries agrégées nécessaires aux graphiques. Les valeurs financières officielles conservent leur précision décimale ; les coordonnées de tracé ne sont que des données de rendu.
+• Recharts est la bibliothèque cible côté React. Les graphiques sont limités à des comparaisons ou tendances utiles, avec période, devise/unité, couverture et provenance accessibles.
+• Les exemples de marge, de trésorerie et de portefeuille dans le mockup de marque sont fictifs. Un indicateur ne devient disponible en production qu'après définition de sa formule, des sources requises et des contrôles associés.
+
 ## 6. Architecture technique recommandée
 
 ### CHOIX D’ARCHITECTURE
@@ -221,7 +239,7 @@ EXPLOITATION : Docker, sauvegardes, CI/CD, environnements séparés
 
 | Couche | Choix pragmatique | Pourquoi / limites |
 | --- | --- | --- |
-| Front-end | React + TypeScript + Vite, PWA responsive. | Rapide à livrer, UI mobile et desktop dans un projet ; PWA d’abord, native plus tard si nécessaire. |
+| Front-end | React + TypeScript + Vite, PWA responsive ; Recharts pour les graphiques (à intégrer). | Une seule UI mobile/desktop ; visualisations SVG déclaratives et responsives, sans moteur BI lourd. |
 | Back-end | Python + Django + Django REST Framework. | Auth, permissions, ORM, administration et écosystème d’import/data solide. |
 | Base principale | PostgreSQL. | Transactions, intégrité relationnelle, rapports et isolation renforcée par politiques d’accès. |
 | Jobs asynchrones | Celery + Redis. | Parsing fichiers, génération de brief, notifications et tâches longues hors requête HTTP. |
