@@ -264,3 +264,8 @@ git push -u origin main
 ```
 
 Le connecteur GitHub disponible dans cette session permet de lire des dépôts et d’y modifier des fichiers, mais n’expose pas d’action de création de dépôt. Le dépôt distant n’a donc pas été créé depuis cette session ; aucun lien GitHub n’est présenté comme existant.
+
+
+## Onboarding & adaptive import profile
+
+New users configure their workspace during sign-up: industry, operating model, number of entities/sites, current data sources, and the report families they want to monitor. YFEN stores these choices as a structured workspace profile and uses the selected report families to prioritize the import experience. The canonical import pipeline remains shared across companies; custom XLSX workbook generation and post-sign-up profile editing are subsequent implementation steps.

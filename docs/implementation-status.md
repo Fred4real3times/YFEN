@@ -4,8 +4,8 @@ Mise à jour : 12 novembre 2026.
 
 | Domaine | État | Détail |
 | --- | --- | --- |
-| Auth | Partiel implémenté | Inscription, connexion par email/mot de passe, token API, `/me`, logout. MFA et cycle de vie avancé du token absents. |
-| Workspace & memberships | Partiel implémenté | Création workspace + OWNER, liste des espaces, ajout d’un compte existant à un workspace. Invitations email et gestion complète des rôles à finir. |
+| Auth & onboarding | Implémenté au niveau API/frontend | Inscription avec profil métier intégré, création atomique compte + workspace + OWNER + profil + audit ; connexion et fallback onboarding pour les comptes sans workspace. MFA et cycle de vie avancé du token absents. |
+| Workspace & memberships | Partiel implémenté | Création workspace + OWNER, profil adaptatif (secteur, structure, outils, familles de rapports), liste des espaces, ajout d’un compte existant. Édition du profil après inscription et invitations email à finir. |
 | Entités / unités | Implémenté en base API | Création/liste entité et unité ; archivage, édition et périmètre fin par unité à finir. |
 | Import CSV/XLSX | Parcours MVP implémenté | Upload quarantaine, SHA-256, preview, mapping montant/date, faits REVIEW, anomalies et confirmation explicite. Les relevés bancaires exigent un solde de clôture daté (valeur la plus récente, sans somme des mouvements). À tester sur des fichiers métiers réels. |
 | PDF textuel | Partiel | Extraction de texte pour lecture assistée ; pas de structuration automatique, pas d’OCR. |
@@ -36,3 +36,8 @@ Mise à jour : 12 novembre 2026.
 - Revue indépendante de sécurité, tests approfondis d’isolation multi-tenant/RBAC, sauvegarde/restauration et exécution Docker complète.
 
 La CI verte valide le build frontend et le socle de tests actuel ; elle ne constitue ni une recette fonctionnelle exhaustive ni une autorisation de pilote client. Aucun déploiement non éphémère ni chargement de données financières réelles n’est recommandé à ce stade.
+
+
+## Onboarding adaptatif — ajout
+
+Le formulaire d’inscription demande désormais le profil opérationnel et les familles de données à suivre. Les comptes anciens sans workspace passent par le même questionnaire au moment de créer leur espace. Les modules sélectionnés sont renvoyés avec le workspace et priorisés dans le formulaire d’import ; les formats non sélectionnés restent accessibles. Le générateur XLSX personnalisé complet et l’édition du profil depuis les paramètres restent à développer.
