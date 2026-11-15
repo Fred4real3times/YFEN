@@ -2,7 +2,49 @@ import { useCallback, useEffect, useState, type FormEvent, type ReactNode } from
 import { api, HttpError } from './api';
 
 type User = { id: number; email: string; full_name: string };
-type Workspace = { id: string; name: string; default_currency: string; timezone: string; role: string };
+type WorkspaceProfile = {
+  industry: string;
+  operating_model: string;
+  entity_count_band: string;
+  source_systems: string[];
+  selected_modules: string[];
+  other_requirements: string;
+  template_version: string;
+  updated_at: string;
+};
+type Workspace = { id: string; name: string; default_currency: string; timezone: string; role: string; profile?: WorkspaceProfile | null };
+type WorkspaceProfileDraft = {
+  industry: string;
+  operating_model: string;
+  entity_count_band: string;
+  source_systems: string[];
+  selected_modules: string[];
+  other_requirements: string;
+};
+const DEFAULT_WORKSPACE_PROFILE: WorkspaceProfileDraft = {
+  industry: "COMMERCE", operating_model: "SINGLE_ENTITY", entity_count_band: "1",
+  source_systems: ["EXCEL_CSV"], selected_modules: ["SALES", "CASH", "EXPENSES"], other_requirements: "",
+};
+const INDUSTRY_OPTIONS = [
+  ["COMMERCE", "Commerce / Distribution"], ["SERVICES", "Services"],
+  ["MANUFACTURING", "Production / Industrie"], ["TRANSPORT_LOGISTICS", "Transport / Logistique"],
+  ["MIXED", "Activités mixtes / Groupe"], ["OTHER", "Autre"],
+];
+const OPERATING_MODEL_OPTIONS = [
+  ["SINGLE_ENTITY", "Une seule entreprise"], ["MULTI_SITE", "Une entreprise avec plusieurs sites"],
+  ["MULTI_ENTITY", "Plusieurs entreprises / groupe"],
+];
+const ENTITY_COUNT_OPTIONS = [["1", "1"], ["2-5", "2 à 5"], ["6-20", "6 à 20"], ["21+", "Plus de 20"]];
+const SOURCE_SYSTEM_OPTIONS = [
+  ["EXCEL_CSV", "Excel / CSV"], ["ACCOUNTING_SOFTWARE", "Logiciel comptable"],
+  ["ERP", "ERP / logiciel de gestion"], ["POS", "Caisse / point de vente"],
+  ["MANUAL", "Saisie manuelle"], ["OTHER", "Autre"],
+];
+const MODULE_OPTIONS = [
+  ["SALES", "Ventes / chiffre d’affaires"], ["CASH", "Encaissements"],
+  ["BANK", "Soldes de trésorerie"], ["EXPENSES", "Dépenses"],
+  ["RECEIVABLES", "Créances clients"], ["PAYABLES", "Dettes fournisseurs"],
+];
 type Entity = { id: string; name: string; code: string; country_code: string; functional_currency: string; sector: string; status: string };
 type Metric = { metric_key: string; label: string; value: string; currency: string; unit: string; period_start: string; period_end: string; entity_id: string | null; entity_ids: string[]; entity_names: string[]; entity_count: number; fact_count: number; last_collected_at: string; sources: {id: string; file: string; created_at: string}[]; coverage: string };
 type Cockpit = { workspace_id: string; generated_at: string; metrics: Metric[]; latest_validated_import: {id: string; original_filename: string; report_type: string; validated_at: string}[]; open_actions: number; overdue_actions: number };
@@ -244,25 +286,144 @@ function Brand() {
   return <div className="brand-lockup"><div className="brand-mark"><svg viewBox="0 0 28 28" width="25" height="25" fill="none" stroke="#04150d" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 20 11 12l5 5 8-10"/><path d="M18 7h6v6"/></svg></div><div className="brand-word"><strong>YFEN</strong><span>CONTROL TOWER</span></div></div>;
 }
 
-function AuthPage({ onAuthenticated }: { onAuthenticated: (result: {token: string; user: User}) => void }) {
-  const [mode, setMode] = useState<'login' | 'register'>('login');
-  const [email, setEmail] = useState(''); const [password, setPassword] = useState(''); const [fullName, setFullName] = useState('');
-  const [busy, setBusy] = useState(false); const [error, setError] = useState('');
-  const submit = async (event: FormEvent) => {
-    event.preventDefault(); setBusy(true); setError('');
-    try {
-      const result = await api<{token: string; user: User}>(`/auth/${mode === 'login' ? 'login' : 'register'}/`, null,
-        { method: 'POST', body: { email, password, full_name: fullName } });
-      onAuthenticated(result);
-    } catch (e) { setError(errorMessage(e)); }
-    finally { setBusy(false); }
+function WorkspaceProfileFields({ profile, onChange }: {
+  profile: WorkspaceProfileDraft;
+  onChange: (patch: Partial<WorkspaceProfileDraft>) => void;
+}) {
+  const toggle = (field: "source_systems" | "selected_modules", value: string) => {
+    const current = profile[field];
+    onChange({ [field]: current.includes(value) ? current.filter(item => item !== value) : [...current, value] });
   };
+  return <section className="signup-profile">
+    <div className="signup-profile-head">
+      <span className="eyebrow">CONFIGURATION DE VOTRE ESPACE</span>
+      <h3>Comment fonctionne votre entreprise ?</h3>
+      <p>Ces réponses personnalisent vos formats d’import. Vous pourrez les ajuster avec l’évolution de votre activité.</p>
+    </div>
+    <div className="form-grid">
+      <label>Secteur d’activité
+        <select value={profile.industry} onChange={e => onChange({ industry: e.target.value })}>
+          {INDUSTRY_OPTIONS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+        </select>
+      </label>
+      <label>Organisation
+        <select value={profile.operating_model} onChange={e => onChange({ operating_model: e.target.value })}>
+          {OPERATING_MODEL_OPTIONS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+        </select>
+      </label>
+      <label>Nombre d’entreprises et/ou de sites
+        <select value={profile.entity_count_band} onChange={e => onChange({ entity_count_band: e.target.value })}>
+          {ENTITY_COUNT_OPTIONS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+        </select>
+      </label>
+    </div>
+    <div className="profile-choice-group">
+      <b>Quels outils utilisez-vous actuellement ?</b><p>Plusieurs réponses possibles.</p>
+      <div className="profile-check-grid">
+        {SOURCE_SYSTEM_OPTIONS.map(([value, label]) => <label className="profile-check" key={value}>
+          <input type="checkbox" checked={profile.source_systems.includes(value)} onChange={() => toggle("source_systems", value)}/>
+          <span>{label}</span>
+        </label>)}
+      </div>
+    </div>
+    <div className="profile-choice-group">
+      <b>Quelles données souhaitez-vous suivre dans YFEN ?</b>
+      <p>Sélectionnez les familles de rapports à inclure dans votre configuration de départ.</p>
+      <div className="profile-check-grid modules">
+        {MODULE_OPTIONS.map(([value, label]) => <label className="profile-check" key={value}>
+          <input type="checkbox" checked={profile.selected_modules.includes(value)} onChange={() => toggle("selected_modules", value)}/>
+          <span>{label}</span>
+        </label>)}
+      </div>
+      {profile.selected_modules.length === 0 && <small className="profile-validation">Sélectionnez au moins une famille de données.</small>}
+    </div>
+    <label className="profile-notes">Avez-vous un besoin particulier ? <span>(facultatif)</span>
+      <textarea value={profile.other_requirements} onChange={e => onChange({ other_requirements: e.target.value })} rows={3} maxLength={2000} placeholder="Ex. suivre les ventes et les dépenses par agence, magasin ou activité…"/>
+    </label>
+  </section>;
+}
+
+function AuthPage({ onAuthenticated }: { onAuthenticated: (result: { token: string; user: User }) => void }) {
+  const [mode, setMode] = useState<"login" | "register">("login");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [workspaceName, setWorkspaceName] = useState("");
+  const [currency, setCurrency] = useState("XAF");
+  const [profile, setProfile] = useState<WorkspaceProfileDraft>(DEFAULT_WORKSPACE_PROFILE);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+
+  const submit = async (event: FormEvent) => {
+    event.preventDefault();
+    if (mode === "register" && profile.selected_modules.length === 0) {
+      setError("Sélectionnez au moins une famille de données à suivre.");
+      return;
+    }
+    setBusy(true);
+    setError("");
+    try {
+      const body: Record<string, unknown> = { email, password, full_name: fullName };
+      if (mode === "register") {
+        body.workspace = {
+          name: workspaceName, default_currency: currency, timezone: "Africa/Douala", profile,
+        };
+      }
+      const result = await api<{token: string; user: User}>(`/auth/${mode === "login" ? "login" : "register"}/`, null,
+        { method: "POST", body });
+      onAuthenticated(result);
+    } catch (e) {
+      setError(errorMessage(e));
+    } finally {
+      setBusy(false);
+    }
+  };
+
   return <div className="auth-page">
-    <div className="auth-visual"><div className="ambient ambient-one"/><div className="ambient ambient-two"/><div className="auth-visual-content"><Brand /><div className="auth-headline"><span className="overline">PILOTAGE EXÉCUTIF · AFRIQUE FRANCOPHONE</span><h1>Voyez clair.<br/><em>Décidez juste.</em><br/>Agissez à temps.</h1><p>Le cockpit qui rassemble les données de vos activités, met les écarts en évidence et transforme les priorités en actions suivies.</p></div><div className="visual-card"><div className="visual-card-top"><span>VUE PORTEFEUILLE</span><span className="visual-dot"/> <small>DONNÉES DE DÉMO</small></div><div className="visual-metric"><b>3</b><span>activités suivies</span></div><div className="visual-bars"><i style={{height:'42%'}}/><i style={{height:'77%'}}/><i style={{height:'56%'}}/><i style={{height:'92%'}}/><i style={{height:'64%'}}/><i style={{height:'84%'}}/><i style={{height:'49%'}}/></div><div className="visual-card-foot"><span>Provenance visible</span><span>Actions traçables</span><span>Multi-entités</span></div></div></div><div className="auth-visual-foot">Une couche de pilotage au-dessus de vos outils existants. Pas un ERP de plus.</div></div>
-    <div className="auth-panel"><div className="auth-panel-inner"><div className="auth-panel-brand"><Brand /></div><span className="eyebrow">ESPACE DE PILOTAGE</span><h2>{mode === 'login' ? 'Heureux de vous revoir.' : 'Créez votre accès YFEN.'}</h2><p className="muted">{mode === 'login' ? 'Connectez-vous pour retrouver votre portefeuille.' : 'Créez un compte administrateur pour démarrer votre espace.'}</p>
-      <div className="auth-switch"><button className={mode === 'login' ? 'active' : ''} onClick={() => setMode('login')}>Connexion</button><button className={mode === 'register' ? 'active' : ''} onClick={() => setMode('register')}>Créer un compte</button></div>
-      <form onSubmit={submit} className="form-stack">{mode === 'register' && <label>Nom complet<input value={fullName} onChange={e => setFullName(e.target.value)} autoComplete="name" placeholder="Votre nom" required /></label>}<label>Adresse e-mail<input type="email" value={email} onChange={e => setEmail(e.target.value)} autoComplete="email" placeholder="vous@entreprise.com" required /></label><label>Mot de passe<input type="password" value={password} onChange={e => setPassword(e.target.value)} autoComplete={mode === 'login' ? 'current-password' : 'new-password'} placeholder={mode === 'login' ? 'Votre mot de passe' : '12 caractères minimum'} minLength={mode === 'register' ? 12 : 1} required /></label>
-        {error && <div className="form-error">{error}</div>}<button className="btn btn-primary full" disabled={busy}>{busy ? 'Veuillez patienter…' : mode === 'login' ? 'Accéder à mon espace' : 'Créer mon compte'}<Icon name="arrow" size={17}/></button></form>
+    <div className="auth-visual">
+      <div className="ambient ambient-one"/><div className="ambient ambient-two"/>
+      <div className="auth-visual-content">
+        <Brand/>
+        <div className="auth-headline">
+          <span className="overline">PILOTAGE EXÉCUTIF · AFRIQUE FRANCOPHONE</span>
+          <h1>Voyez clair.<br/><em>Décidez juste.</em><br/>Agissez à temps.</h1>
+          <p>Le cockpit qui rassemble les données de vos activités, met les écarts en évidence et transforme les priorités en actions suivies.</p>
+        </div>
+        <div className="visual-card">
+          <div className="visual-card-top"><span>VUE PORTEFEUILLE</span><span className="visual-dot"/> <small>DONNÉES DE DÉMO</small></div>
+          <div className="visual-metric"><b>3</b><span>activités suivies</span></div>
+          <div className="visual-bars"><i style={{height:"42%"}}/><i style={{height:"77%"}}/><i style={{height:"56%"}}/><i style={{height:"92%"}}/><i style={{height:"64%"}}/><i style={{height:"84%"}}/><i style={{height:"49%"}}/></div>
+          <div className="visual-card-foot"><span>Provenance visible</span><span>Actions traçables</span><span>Multi-entités</span></div>
+        </div>
+      </div>
+      <div className="auth-visual-foot">Une couche de pilotage au-dessus de vos outils existants. Pas un ERP de plus.</div>
+    </div>
+    <div className="auth-panel"><div className="auth-panel-inner">
+      <div className="auth-panel-brand"><Brand/></div><span className="eyebrow">ESPACE DE PILOTAGE</span>
+      <h2>{mode === "login" ? "Heureux de vous revoir." : "Créez votre accès YFEN."}</h2>
+      <p className="muted">{mode === "login" ? "Connectez-vous pour retrouver votre portefeuille." : "Créez votre compte et personnalisez votre espace dès l’inscription."}</p>
+      <div className="auth-switch">
+        <button type="button" className={mode === "login" ? "active" : ""} onClick={() => setMode("login")}>Connexion</button>
+        <button type="button" className={mode === "register" ? "active" : ""} onClick={() => setMode("register")}>Créer un compte</button>
+      </div>
+      <form onSubmit={submit} className="form-stack signup-form">
+        {mode === "register" && <>
+          <label>Nom complet<input value={fullName} onChange={e => setFullName(e.target.value)} autoComplete="name" placeholder="Votre nom" required/></label>
+          <label>Nom de l’espace ou du groupe<input value={workspaceName} onChange={e => setWorkspaceName(e.target.value)} placeholder="Ex. Groupe Atlantique" maxLength={160} required/></label>
+        </>}
+        <label>Adresse e-mail<input type="email" value={email} onChange={e => setEmail(e.target.value)} autoComplete="email" placeholder="vous@entreprise.com" required/></label>
+        <label>Mot de passe<input type="password" value={password} onChange={e => setPassword(e.target.value)} autoComplete={mode === "login" ? "current-password" : "new-password"} placeholder={mode === "login" ? "Votre mot de passe" : "12 caractères minimum"} minLength={mode === "register" ? 12 : 1} required/></label>
+        {mode === "register" && <>
+          <label>Devise de référence<select value={currency} onChange={e => setCurrency(e.target.value)}>
+            <option value="XAF">XAF — Franc CFA BEAC</option><option value="XOF">XOF — Franc CFA BCEAO</option><option value="EUR">EUR — Euro</option><option value="USD">USD — Dollar US</option>
+          </select></label>
+          <WorkspaceProfileFields profile={profile} onChange={patch => setProfile(current => ({...current, ...patch}))}/>
+        </>}
+        {error && <div className="form-error">{error}</div>}
+        <button className="btn btn-primary full" disabled={busy || (mode === "register" && profile.selected_modules.length === 0)}>
+          {busy ? "Veuillez patienter…" : mode === "login" ? "Accéder à mon espace" : "Créer mon compte et mon espace"}<Icon name="arrow" size={17}/>
+        </button>
+      </form>
       <div className="auth-assurance"><Icon name="shield" size={16}/><span>Accès authentifié. Les données financières ne sont pas exposées dans les caches hors ligne.</span></div>
       <div className="auth-legal">En continuant, vous acceptez les règles d’utilisation de votre organisation. Les conditions et mentions légales seront validées avant le pilote commercial.</div>
     </div></div>
@@ -270,13 +431,43 @@ function AuthPage({ onAuthenticated }: { onAuthenticated: (result: {token: strin
 }
 
 function WorkspaceOnboarding({ token, user, onCreated, onLogout }: {token: string; user: User; onCreated: () => Promise<void>; onLogout: () => Promise<void>}) {
-  const [name, setName] = useState(''); const [currency, setCurrency] = useState('XAF'); const [busy, setBusy] = useState(false); const [error, setError] = useState('');
+  const [name, setName] = useState("");
+  const [currency, setCurrency] = useState("XAF");
+  const [profile, setProfile] = useState<WorkspaceProfileDraft>(DEFAULT_WORKSPACE_PROFILE);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
   const submit = async (event: FormEvent) => {
-    event.preventDefault(); setBusy(true); setError('');
-    try { await api('/workspaces/', token, {method:'POST', body:{name, default_currency:currency, timezone:'Africa/Douala'}}); await onCreated(); }
-    catch (e) { setError(errorMessage(e)); } finally { setBusy(false); }
+    event.preventDefault();
+    if (profile.selected_modules.length === 0) {
+      setError("Sélectionnez au moins une famille de données à suivre.");
+      return;
+    }
+    setBusy(true);
+    setError("");
+    try {
+      await api("/workspaces/", token, {method:"POST", body:{
+        name, default_currency:currency, timezone:"Africa/Douala", profile,
+      }});
+      await onCreated();
+    } catch (e) {
+      setError(errorMessage(e));
+    } finally {
+      setBusy(false);
+    }
   };
-  return <div className="onboarding-wrap"><div className="onboarding-card"><Brand /><span className="eyebrow">BIENVENUE {user.full_name.toUpperCase()}</span><h1>Créons votre premier espace de pilotage.</h1><p>Un espace regroupe les entreprises, les rapports, les indicateurs et les actions que votre équipe est autorisée à consulter.</p><form onSubmit={submit} className="form-stack"><label>Nom de l’espace<input value={name} onChange={e => setName(e.target.value)} placeholder="Ex. Groupe Atlantique" required maxLength={160}/></label><label>Devise par défaut<select value={currency} onChange={e => setCurrency(e.target.value)}><option value="XAF">XAF — Franc CFA BEAC</option><option value="XOF">XOF — Franc CFA BCEAO</option><option value="EUR">EUR — Euro</option><option value="USD">USD — Dollar US</option></select></label>{error && <div className="form-error">{error}</div>}<button className="btn btn-primary full" disabled={busy}>{busy ? 'Création…' : 'Créer mon espace'}<Icon name="arrow"/></button></form><button className="text-button" onClick={() => void onLogout()}>Se déconnecter</button></div></div>;
+  return <div className="onboarding-wrap"><div className="onboarding-card">
+    <Brand/><span className="eyebrow">BIENVENUE {user.full_name.toUpperCase()}</span>
+    <h1>Configurons votre espace de pilotage.</h1>
+    <p>Quelques réponses permettent à YFEN d’adapter les familles de rapports et vos prochains modèles d’import.</p>
+    <form onSubmit={submit} className="form-stack signup-form">
+      <label>Nom de l’espace<input value={name} onChange={e => setName(e.target.value)} placeholder="Ex. Groupe Atlantique" required maxLength={160}/></label>
+      <label>Devise de référence<select value={currency} onChange={e => setCurrency(e.target.value)}><option value="XAF">XAF — Franc CFA BEAC</option><option value="XOF">XOF — Franc CFA BCEAO</option><option value="EUR">EUR — Euro</option><option value="USD">USD — Dollar US</option></select></label>
+      <WorkspaceProfileFields profile={profile} onChange={patch => setProfile(current => ({...current, ...patch}))}/>
+      {error && <div className="form-error">{error}</div>}
+      <button className="btn btn-primary full" disabled={busy || profile.selected_modules.length === 0}>{busy ? "Création…" : "Créer mon espace personnalisé"}<Icon name="arrow"/></button>
+    </form>
+    <button className="text-button" onClick={() => void onLogout()}>Se déconnecter</button>
+  </div></div>;
 }
 
 function PageHeading({ kicker, title, description, action }: {kicker: string; title: string; description: string; action?: React.ReactNode}) {
@@ -333,14 +524,18 @@ function CompaniesScreen({ token, workspace, entities, onRefresh, onToast }: {to
 
 function DataScreen({ token, workspace, entities, imports, onRefresh, onToast }: {token: string; workspace: Workspace; entities: Entity[]; imports: ImportBatch[]; onRefresh: () => Promise<void>; onToast: (message: string) => void}) {
   const today = localDateInputValue(new Date()); const monthStart = `${today.slice(0, 7)}-01`;
-  const [entity,setEntity]=useState(''); const [reportType,setReportType]=useState('SALES'); const [currency,setCurrency]=useState(workspace.default_currency); const [start,setStart]=useState(monthStart); const [end,setEnd]=useState(today); const [file,setFile]=useState<File|null>(null); const [busy,setBusy]=useState(false); const [preview,setPreview]=useState<ImportPreview|null>(null); const [mapping,setMapping]=useState({amount:'',date:''}); const [staged,setStaged]=useState<Staged|null>(null); const [selectedBatch,setSelectedBatch]=useState('');
+  const [entity,setEntity]=useState(''); const [reportType,setReportType]=useState(workspace.profile?.selected_modules?.[0] || 'SALES'); const [currency,setCurrency]=useState(workspace.default_currency); const [start,setStart]=useState(monthStart); const [end,setEnd]=useState(today); const [file,setFile]=useState<File|null>(null); const [busy,setBusy]=useState(false); const [preview,setPreview]=useState<ImportPreview|null>(null); const [mapping,setMapping]=useState({amount:'',date:''}); const [staged,setStaged]=useState<Staged|null>(null); const [selectedBatch,setSelectedBatch]=useState('');
   useEffect(()=>{if(!entity&&entities[0])setEntity(entities[0].id);},[entities,entity]);
   const selectedBatchIsBank = imports.find(batch=>batch.id===selectedBatch)?.report_type === 'BANK';
+  const preferredReportTypes = workspace.profile?.selected_modules || [];
+  const orderedReportTypes = preferredReportTypes.length
+    ? [...REPORT_TYPES.filter(([value]) => preferredReportTypes.includes(value)), ...REPORT_TYPES.filter(([value]) => !preferredReportTypes.includes(value))]
+    : REPORT_TYPES;
   const upload = async (event:FormEvent) => { event.preventDefault(); if(!file){onToast('Sélectionnez un fichier');return;} setBusy(true); try {const batch=await api<ImportBatch>(`/imports/?workspace_id=${workspace.id}`,token,{method:'POST',file,body:{entity,report_type:reportType,currency,period_start:start,period_end:end,workspace_id:workspace.id}});setSelectedBatch(batch.id);const data=await api<ImportPreview>(`/imports/${batch.id}/preview/?workspace_id=${workspace.id}`,token,{method:'POST',body:{workspace_id:workspace.id}});setPreview(data);setStaged(null);setMapping({amount:data.suggested_mapping?.amount||'',date:data.suggested_mapping?.date||''});await onRefresh();onToast('Fichier placé en quarantaine. Vérifiez les colonnes.');}catch(e){onToast(errorMessage(e));}finally{setBusy(false);} };
   const stage = async () => { if(!preview||!selectedBatch)return; setBusy(true);try{const result=await api<Staged>(`/imports/${selectedBatch}/stage/?workspace_id=${workspace.id}`,token,{method:'POST',body:{workspace_id:workspace.id,mapping}});setStaged(result);await onRefresh();}catch(e){onToast(errorMessage(e));}finally{setBusy(false);} };
   const confirm = async () => { if(!selectedBatch)return; setBusy(true);try{const result=await api<{facts_published:number;rejected_rows:number}>(`/imports/${selectedBatch}/confirm/?workspace_id=${workspace.id}`,token,{method:'POST',body:{workspace_id:workspace.id}});onToast(`${result.facts_published} ligne(s) publiées dans le cockpit`);setPreview(null);setStaged(null);setSelectedBatch('');setFile(null);await onRefresh();}catch(e){onToast(errorMessage(e));}finally{setBusy(false);} };
   return <><PageHeading kicker="QUALITÉ & PROVENANCE" title="Données & imports" description="Aucun chiffre ne rejoint le cockpit sans prévisualisation, contrôle et confirmation explicite." action={<span className="status-pill neutral">CSV · XLSX · PDF textuel assisté</span>}/>
-    {entities.length===0 ? <EmptyState icon="building" title="Ajoutez d’abord une entreprise" text="Un import doit toujours être rattaché à une entité de votre portefeuille."/> : <div className="data-layout"><section className="panel import-panel"><div className="panel-head"><div><h3>Importer un rapport</h3><p>Fichier source conservé en quarantaine avant traitement.</p></div><span className="file-limit">MAX. 10 MO</span></div><form className="form-stack" onSubmit={upload}><label>Entreprise<select value={entity} onChange={e=>setEntity(e.target.value)} required>{entities.map(e=><option key={e.id} value={e.id}>{e.name}</option>)}</select></label><label>Famille de rapport<select value={reportType} onChange={e=>setReportType(e.target.value)}>{REPORT_TYPES.map(([value,label])=><option key={value} value={value}>{label}</option>)}</select></label><div className="form-grid two"><label>Début de période<input type="date" value={start} onChange={e=>setStart(e.target.value)} required/></label><label>Fin de période<input type="date" value={end} onChange={e=>setEnd(e.target.value)} required min={start}/></label></div><label>Devise du rapport<select value={currency} onChange={e=>setCurrency(e.target.value)}><option>XAF</option><option>XOF</option><option>EUR</option><option>USD</option></select></label><label className="file-drop"><input type="file" accept=".csv,.xlsx,.pdf,application/pdf,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onChange={e=>setFile(e.target.files?.[0]||null)} required/><Icon name="file" size={24}/><b>{file?.name||'Choisir un fichier ou le déposer ici'}</b><span>CSV, Excel ou PDF textuel · maximum 10 Mo</span></label><button className="btn btn-primary full" disabled={busy}>{busy?'Téléversement…':'Placer le fichier en quarantaine'}<Icon name="arrow"/></button></form><div className="import-security"><Icon name="shield" size={15}/><span>Les macros et formules ne sont jamais exécutées. Les fichiers PDF scannés ne sont pas traités par OCR.</span></div></section>
+    {entities.length===0 ? <EmptyState icon="building" title="Ajoutez d’abord une entreprise" text="Un import doit toujours être rattaché à une entité de votre portefeuille."/> : <div className="data-layout"><section className="panel import-panel"><div className="panel-head"><div><h3>Importer un rapport</h3><p>Fichier source conservé en quarantaine avant traitement.</p></div><span className="file-limit">MAX. 10 MO</span></div><form className="form-stack" onSubmit={upload}><label>Entreprise<select value={entity} onChange={e=>setEntity(e.target.value)} required>{entities.map(e=><option key={e.id} value={e.id}>{e.name}</option>)}</select></label><label>Famille de rapport<select value={reportType} onChange={e=>setReportType(e.target.value)}>{orderedReportTypes.map(([value,label])=><option key={value} value={value}>{preferredReportTypes.includes(value) ? `★ ${label} · sélectionné` : label}</option>)}</select></label><div className="form-grid two"><label>Début de période<input type="date" value={start} onChange={e=>setStart(e.target.value)} required/></label><label>Fin de période<input type="date" value={end} onChange={e=>setEnd(e.target.value)} required min={start}/></label></div><label>Devise du rapport<select value={currency} onChange={e=>setCurrency(e.target.value)}><option>XAF</option><option>XOF</option><option>EUR</option><option>USD</option></select></label><label className="file-drop"><input type="file" accept=".csv,.xlsx,.pdf,application/pdf,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onChange={e=>setFile(e.target.files?.[0]||null)} required/><Icon name="file" size={24}/><b>{file?.name||'Choisir un fichier ou le déposer ici'}</b><span>CSV, Excel ou PDF textuel · maximum 10 Mo</span></label><button className="btn btn-primary full" disabled={busy}>{busy?'Téléversement…':'Placer le fichier en quarantaine'}<Icon name="arrow"/></button></form><div className="import-security"><Icon name="shield" size={15}/><span>Les macros et formules ne sont jamais exécutées. Les fichiers PDF scannés ne sont pas traités par OCR.</span></div></section>
       <section className="panel import-flow"><div className="panel-head"><div><h3>Parcours de validation</h3><p>Une étape humaine avant la publication.</p></div></div><div className="flow-steps"><div className={preview?'done':''}><span>01</span><div><b>Prévisualiser</b><small>Colonnes détectées et échantillon de lignes</small></div></div><div className={staged?'done':''}><span>02</span><div><b>Mapper & contrôler</b><small>Montant, date, période et anomalies</small></div></div><div className={staged?'current':''}><span>03</span><div><b>Confirmer</b><small>Seules les lignes en revue seront publiées</small></div></div></div>
         {preview && <div className="preview-box"><div className="preview-head"><div><span className="eyebrow">PRÉVISUALISATION</span><b>{imports.find(b=>b.id===selectedBatch)?.original_filename || 'Fichier importé'}</b></div><button className="icon-btn" onClick={()=>{setPreview(null);setStaged(null);}}><Icon name="close"/></button></div>{preview.assisted ? <><div className="form-hint">{preview.message}</div><pre className="pdf-preview">{preview.text_preview || 'Aucun texte détecté.'}</pre></> : <><div className="preview-count"><b>{preview.row_count}</b><span>lignes détectées</span><b>{preview.columns?.length}</b><span>colonnes</span></div>{preview.mapping_note && <div className="form-hint mapping-note">{preview.mapping_note}</div>}{!staged && <div className="form-grid two"><label>Colonne du montant<select value={mapping.amount} onChange={e=>setMapping(v=>({...v,amount:e.target.value}))}><option value="">Sélectionner…</option>{preview.columns?.map(c=><option key={c}>{c}</option>)}</select></label><label>Colonne de date {selectedBatchIsBank ? '(obligatoire pour un relevé bancaire)' : '(facultatif)'}<select value={mapping.date} onChange={e=>setMapping(v=>({...v,date:e.target.value}))}><option value="">Aucune</option>{preview.columns?.map(c=><option key={c}>{c}</option>)}</select></label></div>}<div className="table-wrap preview-table"><table><thead><tr>{preview.columns?.map(col=><th key={col}>{col}</th>)}</tr></thead><tbody>{preview.sample?.slice(0,6).map((row,i)=><tr key={i}>{preview.columns?.map(col=><td key={col}>{row[col]||'—'}</td>)}</tr>)}</tbody></table></div>{!staged ? <button className="btn btn-primary full" onClick={()=>void stage()} disabled={busy||!mapping.amount||(selectedBatchIsBank&&!mapping.date)}>{busy?'Analyse…':'Enregistrer le mapping & contrôler'}</button> : <div className="staged-result"><div className="staged-numbers"><div><b>{staged.rows_staged}</b><span>lignes préparées</span></div><div><b>{staged.rows_rejected}</b><span>lignes rejetées</span></div></div><p><b>{staged.metric_label}</b> — les montants sont conservés en {currency}. Aucun total n’est encore publié.</p>{staged.issues.length>0 && <div className="issues-list">{staged.issues.slice(0,5).map(issue=><div key={issue.row_number}><b>Ligne {issue.row_number}</b><span>{issue.message}</span></div>)}</div>}<div className="confirm-box"><Icon name="shield"/><span>Vous confirmez que la période, la devise et la colonne choisie sont correctes. La confirmation publiera uniquement les lignes acceptées.</span></div><button className="btn btn-primary full" disabled={busy||staged.rows_staged===0} onClick={()=>void confirm()}>{busy?'Confirmation…':`Confirmer et publier ${staged.rows_staged} ligne(s)`}</button></div>}</>}</div>}
       </section></div>}

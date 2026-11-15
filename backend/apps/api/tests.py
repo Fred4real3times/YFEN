@@ -3,7 +3,7 @@ from decimal import Decimal
 import pytest
 from rest_framework.test import APIClient
 from apps.identity.models import User
-from apps.tenancy.models import Workspace, WorkspaceMembership, LegalEntity
+from apps.tenancy.models import Workspace, WorkspaceMembership, WorkspaceProfile, LegalEntity
 from apps.sources.models import ImportBatch, MetricFact
 
 @pytest.mark.django_db
@@ -219,3 +219,68 @@ def test_negative_bank_closing_balance_is_supported_but_other_amounts_remain_non
     assert parse_decimal("-125000", allow_negative=True) == Decimal("-125000.000000")
     with pytest.raises(InvalidOperation):
         parse_decimal("-125000")
+
+
+@pytest.mark.django_db
+def test_signup_creates_workspace_profile_and_owner_in_one_operation():
+    client = APIClient()
+    payload = {
+        "email": "signup-profile@example.test",
+        "password": "A-strong-test-password-2026!",
+        "full_name": "Test Owner",
+        "workspace": {
+            "name": "Groupe Adaptatif",
+            "default_currency": "XAF",
+            "timezone": "Africa/Douala",
+            "profile": {
+                "industry": "COMMERCE",
+                "operating_model": "MULTI_SITE",
+                "entity_count_band": "2-5",
+                "source_systems": ["EXCEL_CSV", "ACCOUNTING_SOFTWARE"],
+                "selected_modules": ["SALES", "CASH", "EXPENSES", "RECEIVABLES"],
+                "other_requirements": "Suivre les magasins et les ventes par site.",
+            },
+        },
+    }
+
+    response = client.post("/api/v1/auth/register/", payload, format="json")
+
+    assert response.status_code == 201, response.data
+    workspace_data = response.data["workspace"]
+    workspace = Workspace.objects.get(id=workspace_data["id"])
+    profile = WorkspaceProfile.objects.get(workspace=workspace)
+    membership = WorkspaceMembership.objects.get(workspace=workspace, user=workspace.owner)
+
+    assert membership.role == WorkspaceMembership.Role.OWNER
+    assert profile.industry == WorkspaceProfile.Industry.COMMERCE
+    assert profile.operating_model == WorkspaceProfile.OperatingModel.MULTI_SITE
+    assert profile.entity_count_band == "2-5"
+    assert profile.source_systems == ["EXCEL_CSV", "ACCOUNTING_SOFTWARE"]
+    assert profile.selected_modules == ["SALES", "CASH", "EXPENSES", "RECEIVABLES"]
+    assert workspace_data["profile"]["selected_modules"] == profile.selected_modules
+
+
+@pytest.mark.django_db
+def test_signup_rejects_unknown_import_module_without_creating_account():
+    client = APIClient()
+    response = client.post(
+        "/api/v1/auth/register/",
+        {
+            "email": "invalid-profile@example.test",
+            "password": "A-strong-test-password-2026!",
+            "full_name": "Invalid Profile",
+            "workspace": {
+                "name": "Invalid Workspace",
+                "profile": {
+                    "industry": "COMMERCE",
+                    "operating_model": "SINGLE_ENTITY",
+                    "entity_count_band": "1",
+                    "selected_modules": ["MAKE_PAYMENTS"],
+                },
+            },
+        },
+        format="json",
+    )
+
+    assert response.status_code == 400
+    assert not User.objects.filter(email="invalid-profile@example.test").exists()
