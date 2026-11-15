@@ -386,12 +386,12 @@ function AuthPage({ onAuthenticated }: { onAuthenticated: (result: { token: stri
         <Brand/>
         <div className="auth-headline">
           <span className="overline">PILOTAGE EXÉCUTIF · AFRIQUE FRANCOPHONE</span>
-          <h1>Voyez clair.<br/><em>Décidez juste.</em><br/>Agissez à temps.</h1>
-          <p>Le cockpit qui rassemble les données de vos activités, met les écarts en évidence et transforme les priorités en actions suivies.</p>
+          <h1>Toutes vos entreprises.<br/><em>En un seul endroit.</em></h1>
+          <p>Le cockpit qui réunit vos entreprises, filiales et établissements dans un même portefeuille, rassemble les rapports disponibles et fait ressortir ce qui demande votre attention.</p>
         </div>
         <div className="visual-card">
           <div className="visual-card-top"><span>VUE PORTEFEUILLE</span><span className="visual-dot"/> <small>DONNÉES DE DÉMO</small></div>
-          <div className="visual-metric"><b>3</b><span>activités suivies</span></div>
+          <div className="visual-metric"><b>4</b><span>entreprises réunies</span></div>
           <div className="visual-bars"><i style={{height:"42%"}}/><i style={{height:"77%"}}/><i style={{height:"56%"}}/><i style={{height:"92%"}}/><i style={{height:"64%"}}/><i style={{height:"84%"}}/><i style={{height:"49%"}}/></div>
           <div className="visual-card-foot"><span>Provenance visible</span><span>Actions traçables</span><span>Multi-entités</span></div>
         </div>
