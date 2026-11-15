@@ -5,11 +5,22 @@ Cette fiche formalise la nouvelle maquette de marque fournie en novembre 2026. E
 
 ## 1. Promesse de marque
 
-**Tagline : « Toute votre entreprise. Une seule fenêtre. »**
+**Tagline principale : « Toutes vos entreprises, en un seul endroit. »**
 
-YFEN — *Your Financial & Executive Navigator* — est le point de convergence entre les rapports déjà produits par les différentes activités et le point de décision du dirigeant. YFEN ne remplace pas les logiciels opérationnels : il rend leur information lisible, vérifiable et actionnable.
+**English : “All your businesses, in one place.”**
 
-Le Y-Horizon représente la convergence des flux vers un point de décision unique. Le point radar cerclé d'or africain représente le signal utile à capter, pas un élément décoratif.
+**Descripteur :** Le cockpit de pilotage de votre portefeuille d'entreprises.
+
+YFEN — *Your Financial & Executive Navigator* — réunit dans un même espace les entreprises, filiales, établissements et activités qu'un dirigeant supervise. Il rassemble les rapports de gestion disponibles de ces différentes entités dans un portefeuille unique, fait ressortir ce qui mérite l'attention et aide les équipes à suivre les actions. YFEN ne remplace pas les logiciels opérationnels : il rend leurs informations lisibles, vérifiables et actionnables.
+
+Le Y-Horizon représente la convergence de plusieurs entreprises et activités vers un point de décision commun. Le point radar cerclé d'or africain désigne le signal utile à capter, pas un élément décoratif.
+
+### Portée de la promesse « toutes vos entreprises »
+
+- « Toutes » désigne les entreprises, filiales et établissements rattachés au portefeuille d'un même espace YFEN et pour lesquels les données ont été transmises ou rendues accessibles.
+- « En un seul endroit » désigne une interface, un portefeuille et des droits d'accès communs. Cela ne signifie pas que YFEN se connecte automatiquement à tous les logiciels, reçoit toutes les données en temps réel ou remplace les systèmes opérationnels.
+- Chaque entreprise conserve son identité, ses données, ses sources, sa devise, ses périodes et son historique. La vue portefeuille ne transforme pas à elle seule une somme arithmétique en consolidation comptable.
+- Le dirigeant voit le portefeuille complet selon ses droits ; les comptables et responsables de site ne voient que les entités et unités qui leur sont attribuées.
 
 ## 2. Principes produit non négociables
 
@@ -62,7 +73,7 @@ Le frontend actuel n'est pas encore totalement aligné sur cette typographie : c
 - Les cartes et panneaux utilisent des coins arrondis cohérents (rayon de référence 20 px pour les cartes, 14 px pour les éléments secondaires).
 - Les commandes sont explicites, les états visibles et les feuilles contextuelles servent à afficher le détail sans perdre l'écran d'origine.
 
-## 6. Architecture de l'information — six écrans, un cockpit
+## 6. Architecture de l'information — toutes les entreprises, un cockpit
 
 | Écran | Question principale | Contenu prioritaire |
 | --- | --- | --- |
@@ -77,7 +88,7 @@ Sur mobile, la navigation principale expose Cockpit, Portefeuille, Actions et An
 
 ## 7. Règles de faible charge cognitive
 
-- Le Cockpit est **orienté décision**, pas exploration de données. Il montre au plus quatre indicateurs principaux et trois exceptions prioritaires ; le reste est accessible via « Voir tout ».
+- Le Cockpit est **orienté décision**, pas exploration de données. Il montre au plus quatre indicateurs principaux et trois exceptions prioritaires pour l'ensemble du portefeuille ; le reste est accessible via « Voir tout ».
 - Chaque écran répond à une question principale et présente une action dominante.
 - Les libellés sont courts, en français courant, sans jargon comptable non expliqué.
 - Une variation est toujours accompagnée de sa période de comparaison ; une valeur est accompagnée de sa devise, de sa période et de sa fraîcheur.
@@ -106,4 +117,4 @@ Sur mobile, la navigation principale expose Cockpit, Portefeuille, Actions et An
 
 La maquette décrit la direction visuelle et les parcours cibles. Elle ne prouve ni connexion à l'API, ni exactitude de données réelles, ni disponibilité de toutes les fonctions. Tout KPI, graphique ou état de démonstration doit être remplacé par des données validées ou un état vide explicite avant livraison.
 
-L'ancien fichier `yfen-mockup.html` et ses captures restent une archive de prototype. Cette fiche est désormais la référence pour aligner le frontend et les prochains composants.
+Le fichier `yfen-brand-mockup.html` et les captures de `../screenshots/` constituent la référence visuelle cible. L'ancien fichier `yfen-mockup.html` reste une archive de prototype et ne doit plus guider les nouveaux composants. Les captures du mockup présentent des données fictives et ne prouvent pas que le frontend React est déjà aligné ou connecté à l'API.
