@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="393" height="852" viewBox="0 0 393 852" role="img" aria-labelledby="title desc">
+<title id="title">YFEN — Centre d’actions</title><desc id="desc">Responsable · priorité · échéance</desc>
+<defs><linearGradient id="teal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3FE8C5"/><stop offset="1" stop-color="#00D4AA"/></linearGradient></defs>
+<style>
+.txt{font-family:Inter,Arial,sans-serif;fill:#F0F5FB}.muted{font-family:Inter,Arial,sans-serif;fill:#8CA2C0}.mono{font-family:'JetBrains Mono',monospace;fill:#F0F5FB}.head{font-family:'Clash Display',Inter,Arial,sans-serif;font-weight:700;fill:#F0F5FB}.small{font-size:10px}.body{font-size:12px}.label{font-size:11px;fill:#8CA2C0}.card{fill:#112240;stroke:rgba(255,255,255,.07);stroke-width:1}.divider{stroke:rgba(255,255,255,.08);stroke-width:1}
+</style>
+<rect width="393" height="852" rx="32" fill="#0A192F"/>
+<text class="txt" x="25" y="27" font-size="14" font-weight="700">9:41</text>
+<g fill="#F0F5FB"><rect x="318" y="18" width="4" height="7" rx="1"/><rect x="325" y="15" width="4" height="10" rx="1"/><rect x="332" y="12" width="4" height="13" rx="1"/><rect x="346" y="14" width="23" height="11" rx="3" fill="none" stroke="#F0F5FB"/><rect x="349" y="17" width="15" height="5" rx="1"/></g>
+<g transform="translate(20 51)">
+<rect width="35" height="35" rx="11" fill="#112240" stroke="rgba(255,255,255,.10)"/>
+<path d="M9 9 L17.5 18 M26 9 L17.5 18 M17.5 18 V28" stroke="url(#teal)" stroke-width="3" stroke-linecap="round" fill="none"/>
+<circle cx="17.5" cy="18" r="2.5" fill="#0A192F" stroke="#E6C288" stroke-width="1.5"/>
+</g>
+<text class="head" x="67" y="74" font-size="19">YFEN<tspan fill="#E6C288">.</tspan></text>
+<text class="muted small" x="67" y="91">Toutes vos entreprises, en un seul endroit.</text>
+<circle cx="352" cy="69" r="18" fill="#E6C288"/><text x="352" y="73" text-anchor="middle" font-family="Inter,Arial" font-size="11" font-weight="700" fill="#0A192F">NE</text>
+<text class="head" x="22" y="131" font-size="23">Centre d’actions</text>
+<text class="muted" x="22" y="151" font-size="11">Responsable · priorité · échéance</text>
+
+<rect x="18" y="173" width="171" height="64" rx="14" fill="#112240"/><text class="label" x="34" y="195">À TRAITER</text><text class="mono" x="34" y="224" font-size="22">8</text><rect x="204" y="173" width="171" height="64" rx="14" fill="#112240"/><text class="label" x="220" y="195">EN RETARD</text><text class="mono" x="220" y="224" font-size="22" fill="#FF6B6B">3</text>
+<rect x="18" y="251" width="357" height="40" rx="13" fill="#0C1A33" stroke="rgba(255,255,255,.08)"/><circle cx="38" cy="271" r="6" fill="none" stroke="#8CA2C0"/><text class="muted small" x="55" y="275">Rechercher une action</text>
+<rect x="18" y="303" width="357" height="34" rx="12" fill="#0C1A33"/><text x="43" y="324" fill="#00D4AA" class="small">Toutes</text><text class="muted small" x="120" y="324">En retard</text><text class="muted small" x="215" y="324">En cours</text><text class="muted small" x="303" y="324">Terminées</text>
+<text class="head" x="22" y="375" font-size="16">Priorités du portefeuille</text>
+<rect class="card" x="18" y="392" width="357" height="91" rx="15"/><rect x="18" y="392" width="4" height="91" rx="2" fill="#FF6B6B"/><text class="txt body" x="35" y="418" font-weight="600">Relancer les paiements en retard</text><text class="muted small" x="35" y="438">Estuaire Distribution · A-014</text><text class="muted small" x="35" y="458">Responsable : C. Nkodo</text><text x="357" y="418" fill="#FF6B6B" text-anchor="end" font-size="9">URGENT</text><text class="muted small" x="357" y="458" text-anchor="end">- 7 jours</text>
+<rect class="card" x="18" y="493" width="357" height="91" rx="15"/><rect x="18" y="493" width="4" height="91" rx="2" fill="#E6C288"/><text class="txt body" x="35" y="519" font-weight="600">Transmettre le relevé bancaire</text><text class="muted small" x="35" y="539">Estuaire Distribution · A-012</text><text class="muted small" x="35" y="559">Responsable : N. Essomba</text><text x="357" y="519" fill="#E6C288" text-anchor="end" font-size="9">HAUTE</text><text class="muted small" x="357" y="559" text-anchor="end">- 3 jours</text>
+<rect class="card" x="18" y="594" width="357" height="91" rx="15"/><rect x="18" y="594" width="4" height="91" rx="2" fill="#5487D9"/><text class="txt body" x="35" y="620" font-weight="600">Vérifier l’écart de caisse</text><text class="muted small" x="35" y="640">Wouri Logistique · A-013</text><text class="muted small" x="35" y="660">Responsable : M. Talla</text><text x="357" y="620" fill="#5487D9" text-anchor="end" font-size="9">NORMALE</text><text class="muted small" x="357" y="660" text-anchor="end">Aujourd’hui</text>
+<text class="muted small" x="22" y="725">Chaque action possède un responsable et une échéance.</text>
+
+<rect x="0" y="777" width="393" height="75" fill="#0A192F" stroke="rgba(255,255,255,.07)"/>
+<g font-family="Inter,Arial" font-size="9" text-anchor="middle">
+<text x="43" y="811" fill="#8CA2C0">◉</text><text x="43" y="829" fill="#8CA2C0">Cockpit</text>
+<text x="122" y="811" fill="#8CA2C0">▣</text><text x="122" y="829" fill="#8CA2C0">Portefeuille</text>
+<circle cx="196" cy="802" r="24" fill="url(#teal)"/><path d="M196 812 V790 M188 798 L196 790 204 798" stroke="#0A192F" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+<text x="270" y="811" fill="#8CA2C0">✓</text><text x="270" y="829" fill="#8CA2C0">Actions</text>
+<text x="349" y="811" fill="#8CA2C0">▥</text><text x="349" y="829" fill="#8CA2C0">Analyse</text>
+</g></svg>
