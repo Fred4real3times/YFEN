@@ -401,3 +401,29 @@ Référentiel de vérification de sécurité applicative ; version 5.0.0 publié
 NIST — AI RMF Generative AI Profile
 https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence
 Cadre de référence volontaire pour la gestion des risques des systèmes d’IA générative.
+
+
+## Décision produit — Questionnaire d’inscription et profil d’import adaptatif
+
+Le questionnaire de configuration est intégré à la création du compte, avant la création du premier workspace. L’utilisateur renseigne dans le même parcours :
+- le nom de son espace ou groupe et sa devise de référence ;
+- son secteur d’activité ;
+- son organisation (entreprise unique, entreprise multi-sites ou groupe multi-entités) et une tranche du nombre d’entités/sites ;
+- les outils à partir desquels il exporte ses données (Excel/CSV, logiciel comptable, ERP, caisse/POS, saisie manuelle ou autre) ;
+- les familles de rapports qu’il souhaite suivre : ventes, encaissements, soldes de trésorerie, dépenses, créances clients et dettes fournisseurs ;
+- ses éventuels besoins spécifiques, en texte libre.
+
+### Règles de conception
+1. L’inscription crée le compte, le workspace, le rôle OWNER et le profil métier dans une transaction unique si un profil workspace est fourni. Une erreur de validation ne laisse pas de compte partiellement créé.
+2. Le profil est enregistré dans `WorkspaceProfile`, distinct des données comptables et des faits financiers. Il configure l’expérience et les recommandations de modèles ; il ne crée pas de données financières.
+3. Le template adaptatif est construit à partir d’un noyau canonique commun et de modules activés par le profil. Les familles choisies sont placées en tête du sélecteur d’import. Les autres types restent accessibles afin de ne pas enfermer l’entreprise dans ses réponses initiales.
+4. Les réponses sont indicatives et peuvent évoluer. Le questionnaire n’est pas un contrôle d’éligibilité commerciale ; aucune intégration ERP ou connexion bancaire n’est promise par le choix d’un outil source.
+5. Les anciens clients ou comptes créés sans profil conservent le parcours de création de workspace et reçoivent le même questionnaire avant d’accéder au cockpit.
+6. Le texte libre ne doit jamais être interprété comme une instruction système ou une règle de calcul. Les champs et choix structurés restent la seule source de configuration automatisée.
+
+### Critères d’acceptation
+- Un nouvel utilisateur peut créer son compte et son workspace personnalisé en une seule soumission.
+- Le workspace reçoit son profil, son owner et un événement d’audit.
+- Un type de module non reconnu est rejeté côté API et l’ensemble de la création est annulé.
+- Les préférences enregistrées apparaissent dans la réponse workspace et priorisent les familles de rapports dans l’écran d’import.
+- Les choix initiaux ne masquent ni ne bloquent les autres familles de rapports.

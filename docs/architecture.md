@@ -94,3 +94,18 @@ Rôles initiaux : `OWNER`, `ADMIN`, `ACCOUNTANT`, `MANAGER`, `VIEWER`. Le fronte
 - Activer MFA, rotation/expiration des tokens et sessions révocables par appareil.
 - Configurer un stockage objet S3 privé chiffré, des liens temporaires, la politique de rétention et la restauration.
 - Ajouter observabilité, alertes d’exploitation et tests de charge p95.
+
+
+## Onboarding et configuration du template adaptatif
+
+Le formulaire d’inscription envoie les données d’accès et le profil du workspace à `POST /api/v1/auth/register/`. Lorsque le bloc `workspace` est présent, la création utilisateur, workspace, membership OWNER, profil et événement d’audit est atomique.
+
+`WorkspaceProfile` stocke les réponses structurées :
+- `industry`, `operating_model`, `entity_count_band` ;
+- `source_systems` et `selected_modules` sous forme de listes JSON contrôlées par des choix serveur ;
+- `other_requirements` pour le contexte facultatif ;
+- `template_version` pour versionner la configuration initiale des templates.
+
+Les choix de modules utilisent les codes de familles de rapports déjà supportés par le pipeline P0 (`SALES`, `CASH`, `BANK`, `EXPENSES`, `RECEIVABLES`, `PAYABLES`). Le frontend les priorise dans le sélecteur d’import, sans rendre les autres familles indisponibles. Le profil ne remplace pas le mapping de colonnes : chaque fichier externe passe toujours par preview, mapping, validation et confirmation humaine.
+
+Les anciens comptes sans workspace passent par le même composant de questions au moment de créer leur premier workspace. Les valeurs structurées sont validées côté API ; le texte libre n’est jamais exécuté ni interprété comme règle métier.
