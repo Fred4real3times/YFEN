@@ -1,11 +1,11 @@
 # YFEN — AI BUSINESS CONTROL TOWER
 
 ## Product Requirements Document, architecture technique et roadmap MVP
-Le cockpit de pilotage multi-activités pour les dirigeants de PME et groupes en Afrique francophone.
+Le cockpit qui réunit toutes les entreprises d'un portefeuille au même endroit pour les dirigeants de PME et groupes en Afrique francophone.
 
 ### DÉCISION PRODUIT CENTRALE
 
-Construire une couche de pilotage exécutif qui agrège les données existantes, signale les écarts et organise les actions. Ne pas commencer par un ERP, un logiciel comptable ou un agent IA autonome.
+Promesse : **« Toutes vos entreprises, en un seul endroit. »** Construire une couche de pilotage exécutif qui réunit plusieurs entreprises, filiales, établissements et unités dans un portefeuille commun, à partir des données disponibles ; elle signale les écarts et organise les actions. Ne pas commencer par un ERP, un logiciel comptable ou un agent IA autonome.
 
 Version : 1.0  |  Date : 11 novembre 2026  |  Marché initial : Cameroun  |  Langue de lancement : français
 Statut : proposition de cadrage à valider avec des dirigeants pilotes, un expert-comptable et un conseil juridique local.
@@ -26,7 +26,11 @@ Nombre de décisions ou d’actions importantes suivies et clôturées à temps 
 
 ## 1. Thèse produit et positionnement
 
-Positionnement : « Le cockpit qui permet au dirigeant de savoir, en quelques minutes, ce qui va bien, ce qui dérape, ce qui exige son arbitrage et qui doit agir. »
+Positionnement principal : **« Toutes vos entreprises, en un seul endroit. »**
+
+Promesse fonctionnelle : le cockpit qui permet au dirigeant de voir l'état de toutes les entreprises rattachées à son portefeuille, de comprendre ce qui va bien, ce qui dérape, ce qui exige son arbitrage et qui doit agir.
+
+Cette promesse porte sur les entités et les données effectivement rattachées au workspace. Elle ne suggère ni connexion automatique à tous les systèmes, ni données temps réel, ni consolidation comptable réglementaire.
 
 ### 1.1 Ce que nous construisons
 
