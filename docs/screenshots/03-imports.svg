@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="393" height="852" viewBox="0 0 393 852" role="img" aria-labelledby="title desc">
+<title id="title">YFEN — Imports</title><desc id="desc">Quarantaine · revue humaine · publication</desc>
+<defs><linearGradient id="teal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3FE8C5"/><stop offset="1" stop-color="#00D4AA"/></linearGradient></defs>
+<style>
+.txt{font-family:Inter,Arial,sans-serif;fill:#F0F5FB}.muted{font-family:Inter,Arial,sans-serif;fill:#8CA2C0}.mono{font-family:'JetBrains Mono',monospace;fill:#F0F5FB}.head{font-family:'Clash Display',Inter,Arial,sans-serif;font-weight:700;fill:#F0F5FB}.small{font-size:10px}.body{font-size:12px}.label{font-size:11px;fill:#8CA2C0}.card{fill:#112240;stroke:rgba(255,255,255,.07);stroke-width:1}.divider{stroke:rgba(255,255,255,.08);stroke-width:1}
+</style>
+<rect width="393" height="852" rx="32" fill="#0A192F"/>
+<text class="txt" x="25" y="27" font-size="14" font-weight="700">9:41</text>
+<g fill="#F0F5FB"><rect x="318" y="18" width="4" height="7" rx="1"/><rect x="325" y="15" width="4" height="10" rx="1"/><rect x="332" y="12" width="4" height="13" rx="1"/><rect x="346" y="14" width="23" height="11" rx="3" fill="none" stroke="#F0F5FB"/><rect x="349" y="17" width="15" height="5" rx="1"/></g>
+<g transform="translate(20 51)">
+<rect width="35" height="35" rx="11" fill="#112240" stroke="rgba(255,255,255,.10)"/>
+<path d="M9 9 L17.5 18 M26 9 L17.5 18 M17.5 18 V28" stroke="url(#teal)" stroke-width="3" stroke-linecap="round" fill="none"/>
+<circle cx="17.5" cy="18" r="2.5" fill="#0A192F" stroke="#E6C288" stroke-width="1.5"/>
+</g>
+<text class="head" x="67" y="74" font-size="19">YFEN<tspan fill="#E6C288">.</tspan></text>
+<text class="muted small" x="67" y="91">Toutes vos entreprises, en un seul endroit.</text>
+<circle cx="352" cy="69" r="18" fill="#E6C288"/><text x="352" y="73" text-anchor="middle" font-family="Inter,Arial" font-size="11" font-weight="700" fill="#0A192F">NE</text>
+<text class="head" x="22" y="131" font-size="23">Imports</text>
+<text class="muted" x="22" y="151" font-size="11">Quarantaine · revue humaine · publication</text>
+
+<rect x="18" y="173" width="110" height="37" rx="12" fill="#0C1A33"/><text class="txt small" x="73" y="196" text-anchor="middle">4 publiés</text><rect x="140" y="173" width="105" height="37" rx="12" fill="#0C1A33"/><text x="192" y="196" class="small" fill="#E6C288" text-anchor="middle">2 en revue</text><rect x="257" y="173" width="118" height="37" rx="12" fill="#0C1A33"/><text x="316" y="196" class="small" fill="#FF6B6B" text-anchor="middle">1 anomalie</text>
+<rect x="18" y="224" width="357" height="134" rx="18" fill="#0C1A33" stroke="#00D4AA" stroke-dasharray="5 4"/><circle cx="196" cy="260" r="21" fill="#163E46"/><path d="M196 270 V249 M188 257 L196 249 204 257" stroke="#00D4AA" stroke-width="2.5" fill="none" stroke-linecap="round"/><text class="head" x="196" y="300" text-anchor="middle" font-size="15">Importer un rapport</text><text class="muted small" x="196" y="321" text-anchor="middle">CSV · XLSX · PDF textuel</text><text class="muted small" x="196" y="339" text-anchor="middle">Fichier en quarantaine jusqu’à validation</text>
+<text class="head" x="22" y="397" font-size="16">Fichiers récents</text>
+<rect class="card" x="18" y="415" width="357" height="67" rx="14"/><rect x="31" y="430" width="38" height="38" rx="9" fill="#143B4A"/><text class="head" x="50" y="454" text-anchor="middle" font-size="10">XLSX</text><text class="txt body" x="81" y="441">ventes_mungo_oct.xlsx</text><text class="muted small" x="81" y="459">Mungo Agro · 1 240 lignes</text><text x="357" y="442" fill="#00D4AA" text-anchor="end" font-size="9">PUBLIÉ</text><text class="muted small" x="357" y="460" text-anchor="end">02 nov.</text>
+<rect class="card" x="18" y="491" width="357" height="67" rx="14"/><rect x="31" y="506" width="38" height="38" rx="9" fill="#493D2B"/><text class="head" x="50" y="530" text-anchor="middle" font-size="10">CSV</text><text class="txt body" x="81" y="517">releve_banque_oct.csv</text><text class="muted small" x="81" y="535">Wouri Logistique · 4 comptes</text><text x="357" y="518" fill="#E6C288" text-anchor="end" font-size="9">REVUE</text><text class="muted small" x="357" y="536" text-anchor="end">31 oct.</text>
+<rect class="card" x="18" y="567" width="357" height="67" rx="14"/><rect x="31" y="582" width="38" height="38" rx="9" fill="#482F36"/><text class="head" x="50" y="606" text-anchor="middle" font-size="10">PDF</text><text class="txt body" x="81" y="593">rapport_estuaire.pdf</text><text class="muted small" x="81" y="611">Estuaire Distribution · texte extrait</text><text x="357" y="594" fill="#FF6B6B" text-anchor="end" font-size="9">À CORRIGER</text><text class="muted small" x="357" y="612" text-anchor="end">30 oct.</text>
+<rect x="18" y="650" width="357" height="90" rx="14" fill="#0C1A33"/><text class="head" x="34" y="675" font-size="13">Avant publication</text><text class="muted small" x="34" y="697">Les colonnes, montants, dates et doublons sont</text><text class="muted small" x="34" y="713">contrôlés. Un utilisateur autorisé confirme la revue.</text><text x="34" y="730" fill="#E6C288" font-size="9" font-family="Inter">Aucun chiffre n’est publié automatiquement.</text>
+
+<rect x="0" y="777" width="393" height="75" fill="#0A192F" stroke="rgba(255,255,255,.07)"/>
+<g font-family="Inter,Arial" font-size="9" text-anchor="middle">
+<text x="43" y="811" fill="#8CA2C0">◉</text><text x="43" y="829" fill="#8CA2C0">Cockpit</text>
+<text x="122" y="811" fill="#8CA2C0">▣</text><text x="122" y="829" fill="#8CA2C0">Portefeuille</text>
+<circle cx="196" cy="802" r="24" fill="url(#teal)"/><path d="M196 812 V790 M188 798 L196 790 204 798" stroke="#0A192F" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+<text x="270" y="811" fill="#8CA2C0">✓</text><text x="270" y="829" fill="#8CA2C0">Actions</text>
+<text x="349" y="811" fill="#8CA2C0">▥</text><text x="349" y="829" fill="#8CA2C0">Analyse</text>
+</g></svg>
