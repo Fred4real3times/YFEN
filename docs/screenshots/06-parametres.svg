@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="393" height="852" viewBox="0 0 393 852" role="img" aria-labelledby="title desc">
+<title id="title">YFEN — Paramètres & accès</title><desc id="desc">Membres · rôles · préférences · journal d’audit</desc>
+<defs><linearGradient id="teal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3FE8C5"/><stop offset="1" stop-color="#00D4AA"/></linearGradient></defs>
+<style>
+.txt{font-family:Inter,Arial,sans-serif;fill:#F0F5FB}.muted{font-family:Inter,Arial,sans-serif;fill:#8CA2C0}.mono{font-family:'JetBrains Mono',monospace;fill:#F0F5FB}.head{font-family:'Clash Display',Inter,Arial,sans-serif;font-weight:700;fill:#F0F5FB}.small{font-size:10px}.body{font-size:12px}.label{font-size:11px;fill:#8CA2C0}.card{fill:#112240;stroke:rgba(255,255,255,.07);stroke-width:1}.divider{stroke:rgba(255,255,255,.08);stroke-width:1}
+</style>
+<rect width="393" height="852" rx="32" fill="#0A192F"/>
+<text class="txt" x="25" y="27" font-size="14" font-weight="700">9:41</text>
+<g fill="#F0F5FB"><rect x="318" y="18" width="4" height="7" rx="1"/><rect x="325" y="15" width="4" height="10" rx="1"/><rect x="332" y="12" width="4" height="13" rx="1"/><rect x="346" y="14" width="23" height="11" rx="3" fill="none" stroke="#F0F5FB"/><rect x="349" y="17" width="15" height="5" rx="1"/></g>
+<g transform="translate(20 51)">
+<rect width="35" height="35" rx="11" fill="#112240" stroke="rgba(255,255,255,.10)"/>
+<path d="M9 9 L17.5 18 M26 9 L17.5 18 M17.5 18 V28" stroke="url(#teal)" stroke-width="3" stroke-linecap="round" fill="none"/>
+<circle cx="17.5" cy="18" r="2.5" fill="#0A192F" stroke="#E6C288" stroke-width="1.5"/>
+</g>
+<text class="head" x="67" y="74" font-size="19">YFEN<tspan fill="#E6C288">.</tspan></text>
+<text class="muted small" x="67" y="91">Toutes vos entreprises, en un seul endroit.</text>
+<circle cx="352" cy="69" r="18" fill="#E6C288"/><text x="352" y="73" text-anchor="middle" font-family="Inter,Arial" font-size="11" font-weight="700" fill="#0A192F">NE</text>
+<text class="head" x="22" y="131" font-size="23">Paramètres & accès</text>
+<text class="muted" x="22" y="151" font-size="11">Membres · rôles · préférences · journal d’audit</text>
+
+<rect class="card" x="18" y="173" width="357" height="72" rx="16"/><circle cx="54" cy="209" r="21" fill="#E6C288"/><text x="54" y="213" text-anchor="middle" fill="#0A192F" font-family="Inter" font-size="11" font-weight="700">NE</text><text class="txt body" x="88" y="204" font-weight="600">Nadège Essomba</text><text class="muted small" x="88" y="223">OWNER · nadège@exemple.cm</text>
+<text class="head" x="22" y="281" font-size="16">Mon espace</text><rect class="card" x="18" y="297" width="357" height="89" rx="15"/><text class="label" x="34" y="320">GROUPE SANAGA</text><text class="txt body" x="34" y="345">4 entreprises · 10 unités opérationnelles</text><text class="muted small" x="34" y="367">Devise du portefeuille : XAF</text>
+<text class="head" x="22" y="423" font-size="16">Membres & rôles</text><rect class="card" x="18" y="439" width="357" height="123" rx="15"/>
+<circle cx="48" cy="468" r="14" fill="#E6C288"/><text x="48" y="472" text-anchor="middle" font-size="8" fill="#0A192F">NE</text><text class="txt small" x="72" y="466">Nadège Essomba</text><text class="muted small" x="72" y="482">Dirigeante</text><text x="356" y="472" text-anchor="end" fill="#E6C288" font-size="9">OWNER</text>
+<line class="divider" x1="34" y1="491" x2="359" y2="491"/><circle cx="48" cy="514" r="14" fill="#153C4A"/><text x="48" y="518" text-anchor="middle" font-size="8" fill="#00D4AA">CN</text><text class="txt small" x="72" y="512">Clara Nkodo</text><text class="muted small" x="72" y="528">Comptable</text><text x="356" y="518" text-anchor="end" fill="#00D4AA" font-size="9">ACCOUNTANT</text><line class="divider" x1="34" y1="539" x2="359" y2="539"/><text class="muted small" x="34" y="554">+ Inviter un membre</text>
+<text class="head" x="22" y="599" font-size="16">Préférences</text><rect class="card" x="18" y="614" width="357" height="126" rx="15"/><text class="txt small" x="34" y="640">Langue · FR / EN</text><text class="muted small" x="356" y="640" text-anchor="end">FR actif</text><line class="divider" x1="34" y1="653" x2="359" y2="653"/><text class="txt small" x="34" y="675">Alertes d’échéance</text><text x="356" y="675" fill="#00D4AA" text-anchor="end" font-size="10">Activées</text><line class="divider" x1="34" y1="688" x2="359" y2="688"/><text class="txt small" x="34" y="710">Journal d’audit</text><text class="muted small" x="356" y="710" text-anchor="end">Consulter ›</text>
+
+<rect x="0" y="777" width="393" height="75" fill="#0A192F" stroke="rgba(255,255,255,.07)"/>
+<g font-family="Inter,Arial" font-size="9" text-anchor="middle">
+<text x="43" y="811" fill="#8CA2C0">◉</text><text x="43" y="829" fill="#8CA2C0">Cockpit</text>
+<text x="122" y="811" fill="#8CA2C0">▣</text><text x="122" y="829" fill="#8CA2C0">Portefeuille</text>
+<circle cx="196" cy="802" r="24" fill="url(#teal)"/><path d="M196 812 V790 M188 798 L196 790 204 798" stroke="#0A192F" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+<text x="270" y="811" fill="#8CA2C0">✓</text><text x="270" y="829" fill="#8CA2C0">Actions</text>
+<text x="349" y="811" fill="#8CA2C0">▥</text><text x="349" y="829" fill="#8CA2C0">Analyse</text>
+</g></svg>
