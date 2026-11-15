@@ -16,7 +16,7 @@ Mise à jour : 12 novembre 2026.
 | Frontend | MVP de travail | React responsive, login/register, workspace, entreprises, imports, cockpit, actions, analyse, paramètres et audit. L'alignement sur le nouveau brand system reste à faire. |
 | PWA faible réseau | Partiel | Manifest et cache du shell seulement. Aucun cache de données financières ; brouillons offline/synchronisation et conflit pas encore implémentés. |
 | Graphiques analytiques | Non intégré | La page Analyse React affiche les agrégats sous forme de liste ; Recharts est retenu comme cible, mais n'est pas encore installé ni connecté à des séries API. |
-| Brand system final | Spécifié, intégration frontend à faire | Référence dans `docs/design/brand-system.md`. Les captures actuelles restent celles de l'ancien prototype. |
+| Brand system & mockup portefeuille | Spécifiés ; intégration frontend à faire | `docs/design/brand-system.md` et `docs/design/yfen-brand-mockup.html` sont la nouvelle référence. Les six captures `docs/screenshots/` sont désormais rendues depuis ce mockup. Le frontend React n'est pas encore visuellement aligné. |
 | Assistant IA | Non activé | Module P1 verrouillé ; aucune donnée n’est envoyée à un LLM. |
 | CI | Validée sur GitHub Actions | Sur `main` : migrations générées puis appliquées sur PostgreSQL 17, `manage.py check`, Ruff et 6 tests backend passés sous Python 3.12 et 3.13 ; type-check TypeScript et build Vite passés sous Node 22. Les migrations générées ne sont pas encore versionnées. |
 | Déploiement | Dev | Docker Compose PostgreSQL/Redis/API/Frontend préparé. Pas d’environnement de production, de sauvegardes testées ou de SLA. |
@@ -28,7 +28,7 @@ Mise à jour : 12 novembre 2026.
 - Smoke tests des parseurs : CSV, conversion Decimal, dates, rejet des cellules XLSX contenant des formules et autorisation contrôlée des soldes bancaires négatifs.
 - Syntaxe JavaScript du mockup : `node --check` sur les scripts extraits.
 - Analyse syntaxique TypeScript/TSX : `typescript.transpileModule` sans diagnostic syntaxique pour `App.tsx`, `api.ts`, `main.tsx` et `vite.config.ts` (ce contrôle ne remplace pas un type-check).
-- Rendu Chromium du mockup : six écrans détectés et captures PNG générées. Il s’agit du mockup HTML, pas d’une session de l’application React connectée.
+- Rendu Chromium du nouveau mockup de marque : six écrans détectés ; six captures WebP mises à jour dans `docs/screenshots/`. Il s’agit de la maquette interactive avec données fictives, pas d’une session de l’application React connectée.
 - `git diff --check` : passé ; dépôt local propre après commit.
 
 **Contrôles non exécutés localement / restant à faire :**
