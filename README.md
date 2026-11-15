@@ -23,6 +23,8 @@ YFEN réunit des rapports de gestion déjà produits (Excel, CSV et certains PDF
 - Hors MVP : ERP, comptabilité réglementaire, paie, POS, virements/paiements, banque ou Mobile Money en temps réel, agent IA autonome, OCR de masse.
 - Aucune somme multi-devises sans méthode de conversion documentée. Les valeurs sont séparées par entité, période et devise.
 - Les faits sont d’abord préparés en `REVIEW` ; seuls les faits confirmés par un utilisateur autorisé alimentent le cockpit.
+- L'expérience est exécutive et sobre : quatre indicateurs principaux et trois exceptions prioritaires au maximum, avec détails et provenance accessibles progressivement.
+- La nouvelle identité et les règles de conception sont définies dans [docs/design/brand-system.md](docs/design/brand-system.md) ; elle remplace la direction visuelle de l'ancien prototype.
 
 ## Stack
 
@@ -68,7 +70,7 @@ Ces captures proviennent du **mockup HTML interactif** fourni et adapté au pér
 | Analyse | ![Analyse](docs/screenshots/05-analyse.webp) |
 | Paramètres & accès | ![Paramètres et accès](docs/screenshots/06-profil.webp) |
 
-La maquette conserve le thème dark fintech, mais remplace le parcours de virement par le centre d’actions prévu au PRD. Les montants et activités visibles sont fictifs.
+Ces captures documentent l'ancien prototype interactif. La référence visuelle actuelle est désormais [docs/design/brand-system.md](docs/design/brand-system.md) ; le frontend React doit encore être aligné sur cette identité. Les montants et activités visibles sont fictifs.
 
 ## Arborescence
 
