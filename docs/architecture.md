@@ -85,7 +85,7 @@ Rôles initiaux : `OWNER`, `ADMIN`, `ACCOUNTANT`, `MANAGER`, `VIEWER`. Le fronte
 | Tableurs | openpyxl | Lecture XLSX en mode lecture seule et `data_only`. |
 | PDF | pdfplumber | Extraction textuelle assistée, sans OCR. |
 | Jobs futurs | Celery + Redis | Parsing lourd, briefs et notifications asynchrones après le P0. |
-| Frontend | React 19.3.0, TypeScript 5.9, Vite 8.3 | PWA responsive. |
+| Frontend | React 19.3.0, TypeScript 5.9, Vite 8.3 ; Recharts retenu pour les visualisations (à intégrer) | PWA responsive, mobile-first, expérience exécutive concise. |
 
 ## Limites d’architecture à traiter avant pilote payant
 
@@ -109,3 +109,83 @@ Le formulaire d’inscription envoie les données d’accès et le profil du wor
 Les choix de modules utilisent les codes de familles de rapports déjà supportés par le pipeline P0 (`SALES`, `CASH`, `BANK`, `EXPENSES`, `RECEIVABLES`, `PAYABLES`). Le frontend les priorise dans le sélecteur d’import, sans rendre les autres familles indisponibles. Le profil ne remplace pas le mapping de colonnes : chaque fichier externe passe toujours par preview, mapping, validation et confirmation humaine.
 
 Les anciens comptes sans workspace passent par le même composant de questions au moment de créer leur premier workspace. Les valeurs structurées sont validées côté API ; le texte libre n’est jamais exécuté ni interprété comme règle métier.
+
+
+## Architecture d'expérience — précision, concision et faible charge cognitive
+
+La direction de marque et d'expérience est définie dans [`docs/design/brand-system.md`](design/brand-system.md). Elle constitue une contrainte de conception, pas une simple couche cosmétique.
+
+### Contrat d'expérience
+
+- **Une seule application, des espaces adaptés au rôle.** Aucun produit ou frontend distinct pour le dirigeant et les opérateurs.
+- **Owner : cockpit exécutif par défaut.** La première vue répond à « que dois-je savoir et traiter maintenant ? » ; elle privilégie la situation globale, quatre indicateurs de tête au maximum, trois exceptions prioritaires au maximum, la fraîcheur des données et les actions à arbitrer.
+- **Accountant / Manager : espace opérationnel.** Leur entrée privilégie les imports à préparer, les anomalies à corriger, les lots en attente et les actions affectées. Les fonctions visibles dépendent des permissions et du périmètre attribué.
+- **Détails progressifs.** Un chiffre ouvre son explication ; l'explication ouvre les sources ; les lignes détaillées et les filtres avancés ne sont pas exposés par défaut.
+- **Une question et une action principale par écran.** Le Cockpit ne devient pas un outil BI. Les analyses graphiques approfondies restent dans l'écran Analyse.
+- **Vocabulaire dirigeant.** Libellés courts, dates explicites, termes métier usuels ; les termes comptables spécialisés sont expliqués au moment où ils apparaissent.
+- **Pas de fausse précision.** Une donnée partielle, ancienne ou non comparable est signalée au même niveau que la valeur. Une donnée absente n'est jamais remplacée par zéro ou par une estimation.
+- **Defaults adaptatifs.** `WorkspaceProfile` peut prioriser les types de rapports, les filtres et les parcours pertinents, mais ne doit ni masquer définitivement les autres fonctions ni créer des KPI sans données suffisantes.
+
+### Architecture de navigation cible
+
+Les six espaces fonctionnels sont Cockpit, Portefeuille, Imports, Actions, Analyse, Paramètres & accès. Sur mobile, Cockpit, Portefeuille, Actions et Analyse constituent les onglets visibles ; l'import est l'action centrale ; les paramètres sont accessibles depuis l'en-tête. Sur desktop, la même hiérarchie s'adapte en navigation latérale. Ce découpage reprend la maquette de marque : six écrans, un cockpit.
+
+### Périmètres d'accès et séparation des tâches
+
+- Un `WorkspaceMembership` doit pouvoir porter des accès explicites à une ou plusieurs entités/unités opérationnelles. Les filtres de périmètre sont appliqués dans les querysets et services backend, jamais uniquement dans React.
+- Le dirigeant OWNER conserve une vue portefeuille globale et les capacités d'arbitrage prévues par ses permissions.
+- Le comptable travaille sur les entités qui lui sont attribuées, contrôle les données et traite la file de revue.
+- Le gestionnaire de site importe et suit les informations de son périmètre ; il ne voit pas automatiquement les autres entités ni les agrégats globaux.
+- **Maker–checker cible :** le préparateur soumet un lot ; une personne autorisée et distincte le vérifie et le publie. L'auto-approbation est interdite, sauf mécanisme d'urgence audité explicitement défini.
+- État actuel à ne pas masquer : les permissions par unité et l'approbation indépendante ne sont pas encore complètement implémentées. Les endpoints actuels de confirmation d'import reposent sur le rôle générique d'écriture. Ces contrôles doivent être réalisés côté API avant un pilote multi-utilisateur.
+
+## Moteur analytique, KPI et génération des graphiques
+
+### Calculs financiers
+
+Le backend reste l'unique source de vérité des calculs. Le moteur analytique doit évoluer depuis `apps/api/metrics.py` et `apps/api/data_services.py`, sans déplacer les formules financières vers React ou vers un LLM.
+
+- Utiliser `Decimal` pour les montants, agrégations, variations et ratios financiers ; ne pas utiliser `float` pour la logique financière.
+- Maintenir un registre de KPI versionné : identifiant, libellé utilisateur, définition, formule, champs sources, unité, devise, période, règles de signe, prérequis, version de formule et tests de référence.
+- Un ratio n'est publié que si toutes ses composantes et les périodes nécessaires sont disponibles et comparables. Une base nulle ou une période non comparable produit « N/A / non calculable », jamais une valeur inventée.
+- Les KPI distinguent les valeurs rapportées des valeurs rapprochées ou consolidées. Le libellé doit refléter le niveau réel de contrôle.
+- Les agrégations de portefeuille regroupent uniquement les faits de même métrique, unité, période et devise. Aucune conversion automatique ; aucune élimination intragroupe au MVP.
+- Chaque réponse KPI conserve sa provenance : lots, fichiers, lignes/champs, règle appliquée, date de collecte, date de validation et personne ayant validé.
+- La fraîcheur et la couverture des données sont des attributs de premier niveau. Une valeur partielle ne peut pas être présentée comme complète.
+
+### Contrat API pour la visualisation
+
+L'API fournit des séries prêtes à afficher, pas des formules à exécuter dans le navigateur. Chaque série contient au minimum : clé et libellé de métrique, période, devise, unité, points temporels ou catégories, couverture, fraîcheur et références de provenance.
+
+Les valeurs financières exactes restent sérialisées dans un format décimal sans perte (chaînes décimales). Si la bibliothèque graphique exige une coordonnée numérique, le backend peut fournir une représentation de tracé bornée et documentée ; elle ne devient jamais la valeur comptable officielle. Les infobulles et les cartes affichent la valeur exacte formatée par le serveur ou à partir de sa représentation décimale, sans recalcul financier dans le navigateur.
+
+### Rendu des graphiques
+
+- **Choix cible : Recharts**, bibliothèque déclarative React qui rend les graphiques en SVG et propose des comportements responsives. La dépendance n'est pas encore installée dans le frontend au moment de cette mise à jour.
+- Graphique en ligne pour une évolution temporelle ; barres pour comparer des entités/périodes ; donut uniquement pour une répartition simple et utile.
+- Les graphiques détaillés se trouvent dans Analyse, pas dans le Cockpit exécutif par défaut.
+- Chaque visualisation doit avoir une question/titre, une période, une unité/devise et un statut de couverture. Pas de graphique si les données sont insuffisantes ou non comparables.
+- Limiter les séries et les légendes ; conserver un tableau ou une liste accessible ; respecter les couleurs sémantiques du brand system, sans palette arc-en-ciel.
+- Les interactions de graphique servent à ouvrir le détail et la provenance ; elles ne déclenchent aucune modification des données sources.
+
+### État réel vs cible
+
+| Capacité | État au moment de cette mise à jour |
+| --- | --- |
+| Agrégation des faits validés | Socle implémenté dans `build_cockpit`, avec `Decimal` et séparation par devise/période/unité. |
+| Registre complet de formules et ratios | À concevoir et tester ; le socle actuel n'est pas un moteur financier complet. |
+| API de séries chronologiques / comparatives | À développer ; le cockpit actuel renvoie principalement des agrégats par groupe. |
+| Bibliothèque Recharts et graphiques connectés | Décision d'architecture ; non installée/non intégrée à ce commit. |
+| Alignement complet du frontend sur le brand system | À réaliser ; le CSS existant ne reprend pas encore toutes les couleurs et typographies de la nouvelle maquette. |
+
+## Rôle de l'intelligence artificielle
+
+L'IA intervient après le moteur de calcul, comme couche d'explication et d'assistance :
+
+1. Les services métier déterminent les KPI, alertes, périodes comparables et données sources accessibles.
+2. Le contexte envoyé au LLM contient uniquement les agrégats autorisés, leurs définitions, leurs limites et leurs références.
+3. Le LLM rédige une synthèse courte, explique les écarts, répond aux questions et peut proposer une action.
+4. Les chiffres restitués sont liés aux résultats structurés reçus ; le LLM ne recalcule pas les montants, ne crée pas de KPI, n'invente pas de causes et n'accède jamais au SQL libre.
+5. Toute action créée à partir d'une suggestion exige un aperçu et une confirmation humaine.
+
+L'assistant doit savoir répondre « données insuffisantes », « période non comparable » ou « source trop ancienne ». Sa réponse est concise, orientée décision et accompagnée des références qui permettent d'ouvrir la preuve.
