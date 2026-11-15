@@ -9,12 +9,14 @@ Mise à jour : 12 novembre 2026.
 | Entités / unités | Implémenté en base API | Création/liste entité et unité ; archivage, édition et périmètre fin par unité à finir. |
 | Import CSV/XLSX | Parcours MVP implémenté | Upload quarantaine, SHA-256, preview, mapping montant/date, faits REVIEW, anomalies et confirmation explicite. Les relevés bancaires exigent un solde de clôture daté (valeur la plus récente, sans somme des mouvements). À tester sur des fichiers métiers réels. |
 | PDF textuel | Partiel | Extraction de texte pour lecture assistée ; pas de structuration automatique, pas d’OCR. |
-| KPI | Socle implémenté | Agrégation Decimal de faits validés, séparée par entité, période et devise, avec provenance. Dictionnaire métier et règles d’exhaustivité à valider. |
+| KPI | Socle implémenté | Agrégation Decimal de faits validés, séparée par entité, période et devise, avec provenance. Dictionnaire métier et règles d’exhaustivité à valider ; pas encore de moteur complet de ratios/variations. |
 | Alertes | Partiel | Règles pour actions en retard et imports anciens. Alertes reporting manquant/variation seuil à étendre et tester. |
 | Centre d’actions | Socle implémenté | Création, assignation à un membre, priorité, échéance, statuts et commentaires API. Preuves et historique détaillé à finir. |
 | Audit | Partiel | Journal de lecture append-only au niveau modèle, événements de base. Protection externe et couverture de toutes les mutations à compléter. |
-| Frontend | MVP de travail | React responsive, login/register, workspace, entreprises, imports, cockpit, actions, analyse, paramètres et audit. |
+| Frontend | MVP de travail | React responsive, login/register, workspace, entreprises, imports, cockpit, actions, analyse, paramètres et audit. L'alignement sur le nouveau brand system reste à faire. |
 | PWA faible réseau | Partiel | Manifest et cache du shell seulement. Aucun cache de données financières ; brouillons offline/synchronisation et conflit pas encore implémentés. |
+| Graphiques analytiques | Non intégré | La page Analyse React affiche les agrégats sous forme de liste ; Recharts est retenu comme cible, mais n'est pas encore installé ni connecté à des séries API. |
+| Brand system final | Spécifié, intégration frontend à faire | Référence dans `docs/design/brand-system.md`. Les captures actuelles restent celles de l'ancien prototype. |
 | Assistant IA | Non activé | Module P1 verrouillé ; aucune donnée n’est envoyée à un LLM. |
 | CI | Validée sur GitHub Actions | Sur `main` : migrations générées puis appliquées sur PostgreSQL 17, `manage.py check`, Ruff et 6 tests backend passés sous Python 3.12 et 3.13 ; type-check TypeScript et build Vite passés sous Node 22. Les migrations générées ne sont pas encore versionnées. |
 | Déploiement | Dev | Docker Compose PostgreSQL/Redis/API/Frontend préparé. Pas d’environnement de production, de sauvegardes testées ou de SLA. |
