@@ -65,9 +65,9 @@ Ces captures proviennent du **mockup HTML interactif** fourni et adapté au pér
 | --- | --- |
 | Cockpit — vue de toutes les entreprises | ![Cockpit](docs/screenshots/01-cockpit.webp) |
 | Portefeuille — entreprises et unités | ![Portefeuille](docs/screenshots/02-portefeuille.webp) |
-| Imports | ![Imports](docs/screenshots/03-imports.webp) |
+| Imports | ![Imports](docs/screenshots/03-imports.svg) |
 | Centre d’actions | ![Actions](docs/screenshots/04-actions.webp) |
-| Analyse | ![Analyse](docs/screenshots/05-analyse.webp) |
+| Analyse | ![Analyse](docs/screenshots/05-analyse.svg) |
 | Paramètres & accès | ![Paramètres](docs/screenshots/06-parametres.webp) |
 
 Ces six captures proviennent du nouveau [mockup interactif](docs/design/yfen-brand-mockup.html) et reflètent son portefeuille multi-entreprises, sa palette et ses six écrans. Les montants, sociétés et utilisateurs sont fictifs. Elles montrent la direction visuelle cible, pas encore une session du frontend React connecté à l'API ; son alignement sur le mockup reste à réaliser.
