@@ -1,18 +1,18 @@
 # YFEN — AI Business Control Tower
 
-**Clarity across the business. Confidence in every decision.**
+**All your businesses, in one place.**
 
 ## Vision & Mission
 
 **Vision**  
-A future where SME leaders across Africa can understand the health of every business they oversee, trust the information behind their numbers, and make timely decisions with confidence.
+A future where SME leaders across Africa can see all the companies, subsidiaries and sites they oversee in one portfolio, trust the information behind the numbers, and make timely decisions with confidence.
 
 **Mission**  
-YFEN turns fragmented operational reports into a trusted management cockpit. It brings existing business data into one traceable view, highlights what needs attention, and helps teams assign and follow through on actions—without forcing businesses to replace the tools they already rely on.
+YFEN brings the existing reports of multiple companies, subsidiaries and operating sites into one trusted portfolio. It makes the group easier to understand, highlights what needs attention, and helps teams assign and follow through on actions—without forcing businesses to replace the tools they already rely on.
 
 ---
 
-YFEN réunit des rapports de gestion déjà produits (Excel, CSV et certains PDF textuels), rend la provenance des chiffres visible, met en évidence des exceptions et structure les actions du dirigeant. Il ne remplace pas les ERP, logiciels comptables, caisses ou outils métiers existants.
+YFEN réunit dans un même espace les entreprises, filiales et établissements rattachés au portefeuille d'un dirigeant. Il rassemble les rapports de gestion transmis (Excel, CSV et certains PDF textuels), rend la provenance des chiffres visible, met en évidence les exceptions et structure les actions. Cela ne signifie pas que toutes les sources sont connectées automatiquement ou en temps réel ; les outils ERP, comptables, caisses et métiers existants restent en place.
 
 > **État : socle full-stack de MVP en développement.** La CI GitHub passe sur `main` : build/type-check frontend et 6 tests backend sous Python 3.12 et 3.13, avec PostgreSQL. Les migrations initiales restent générées temporairement dans la CI et doivent être relues puis versionnées. La recette navigateur de l’application connectée, la revue indépendante de sécurité et le déploiement restent des gates avant pilote client. Ne pas y charger de données financières client en l’état.
 
@@ -24,7 +24,7 @@ YFEN réunit des rapports de gestion déjà produits (Excel, CSV et certains PDF
 - Aucune somme multi-devises sans méthode de conversion documentée. Les valeurs sont séparées par entité, période et devise.
 - Les faits sont d’abord préparés en `REVIEW` ; seuls les faits confirmés par un utilisateur autorisé alimentent le cockpit.
 - L'expérience est exécutive et sobre : quatre indicateurs principaux et trois exceptions prioritaires au maximum, avec détails et provenance accessibles progressivement.
-- La nouvelle identité et les règles de conception sont définies dans [docs/design/brand-system.md](docs/design/brand-system.md) ; elle remplace la direction visuelle de l'ancien prototype.
+- La promesse de marque est « Toutes vos entreprises, en un seul endroit. » ; l'identité et les règles de conception sont définies dans [docs/design/brand-system.md](docs/design/brand-system.md).
 
 ## Stack
 
@@ -61,16 +61,16 @@ Consulte [l’état d’implémentation](docs/implementation-status.md) pour les
 
 Ces captures proviennent du **mockup HTML interactif** fourni et adapté au périmètre YFEN. Elles illustrent la direction visuelle et les parcours cibles ; elles ne sont pas des captures de l’application React connectée à une API réelle.
 
-| Écran | Aperçu |
+| Écran du mockup | Aperçu |
 | --- | --- |
-| Mon portefeuille | ![Mon portefeuille](docs/screenshots/01-portfolio.webp) |
-| Entreprises | ![Entreprises](docs/screenshots/02-entreprises.webp) |
+| Cockpit — vue de toutes les entreprises | ![Cockpit](docs/screenshots/01-cockpit.webp) |
+| Portefeuille — entreprises et unités | ![Portefeuille](docs/screenshots/02-portefeuille.webp) |
 | Imports | ![Imports](docs/screenshots/03-imports.webp) |
-| Centre d’actions | ![Centre d’actions](docs/screenshots/04-centre-actions.webp) |
+| Centre d’actions | ![Actions](docs/screenshots/04-actions.webp) |
 | Analyse | ![Analyse](docs/screenshots/05-analyse.webp) |
-| Paramètres & accès | ![Paramètres et accès](docs/screenshots/06-profil.webp) |
+| Paramètres & accès | ![Paramètres](docs/screenshots/06-parametres.webp) |
 
-Ces captures documentent l'ancien prototype interactif. La référence visuelle actuelle est désormais [docs/design/brand-system.md](docs/design/brand-system.md) ; le frontend React doit encore être aligné sur cette identité. Les montants et activités visibles sont fictifs.
+Ces six captures proviennent du nouveau [mockup interactif](docs/design/yfen-brand-mockup.html) et reflètent son portefeuille multi-entreprises, sa palette et ses six écrans. Les montants, sociétés et utilisateurs sont fictifs. Elles montrent la direction visuelle cible, pas encore une session du frontend React connecté à l'API ; son alignement sur le mockup reste à réaliser.
 
 ## Arborescence
 
