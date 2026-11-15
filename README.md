@@ -1,6 +1,16 @@
 # YFEN — AI Business Control Tower
 
-**Le cockpit de pilotage multi-activités des dirigeants de PME et groupes en Afrique francophone.**
+**Clarity across the business. Confidence in every decision.**
+
+## Vision & Mission
+
+**Vision**  
+A future where SME leaders across Africa can understand the health of every business they oversee, trust the information behind their numbers, and make timely decisions with confidence.
+
+**Mission**  
+YFEN turns fragmented operational reports into a trusted management cockpit. It brings existing business data into one traceable view, highlights what needs attention, and helps teams assign and follow through on actions—without forcing businesses to replace the tools they already rely on.
+
+---
 
 YFEN réunit des rapports de gestion déjà produits (Excel, CSV et certains PDF textuels), rend la provenance des chiffres visible, met en évidence des exceptions et structure les actions du dirigeant. Il ne remplace pas les ERP, logiciels comptables, caisses ou outils métiers existants.
 
